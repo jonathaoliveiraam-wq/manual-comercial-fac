@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual Comercial — Faço a Conta</title>
+<style>
+  :root {
+    --dark: #0d0d2b;
+    --navy: #12123a;
+    --purple: #6c3fc5;
+    --purple-light: #8b5cf6;
+    --purple-soft: #1e1650;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border: #2d2b6e;
+    --accent: #a78bfa;
+    --green: #10b981;
+    --red: #ef4444;
+    --yellow: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, Helvetica, sans-serif; background: var(--dark); color: var(--text); display: flex; min-height: 100vh; font-size: 16px; }
+
+  /* HAMBURGER */
+  #hamburger {
+    display: none; position: fixed; top: 14px; left: 14px; z-index: 200;
+    background: var(--purple); border: none; border-radius: 8px; padding: 10px 12px;
+    cursor: pointer; flex-direction: column; gap: 5px;
+  }
+  #hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
+  #overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 99; }
+
+  /* SIDEBAR */
+  #sidebar {
+    width: 270px; min-width: 270px; background: var(--navy); border-right: 1px solid var(--border);
+    position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto; z-index: 100;
+    padding-bottom: 40px; transition: transform 0.3s ease;
+  }
+  .sidebar-header {
+    padding: 24px 20px 16px; border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, #1a0a4e, #0d0d2b);
+  }
+  .sidebar-header h2 { font-size: 17px; color: var(--accent); font-weight: 700; letter-spacing: 0.5px; }
+  .sidebar-header p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+  .sidebar-section { padding: 14px 20px 4px; font-size: 11px; color: var(--purple-light); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; }
+  .sidebar-link {
+    display: block; padding: 10px 20px 10px 28px; font-size: 14px; color: var(--text-muted);
+    text-decoration: none; transition: all 0.2s; border-left: 2px solid transparent;
+    cursor: pointer; line-height: 1.4;
+  }
+  .sidebar-link:hover, .sidebar-link.active { color: var(--accent); border-left-color: var(--purple); background: rgba(107,63,197,0.12); }
+
+  /* MAIN */
+  #main { margin-left: 270px; flex: 1; padding: 44px 52px; max-width: 980px; }
+
+  /* SECTIONS */
+  section { margin-bottom: 64px; scroll-margin-top: 28px; }
+  h1 { font-size: 30px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  h2 { font-size: 22px; font-weight: 700; color: var(--accent); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 17px; font-weight: 700; color: var(--purple-light); margin: 24px 0 12px; }
+  p { font-size: 15px; line-height: 1.75; color: var(--text); margin-bottom: 14px; }
+  ul, ol { padding-left: 22px; font-size: 15px; line-height: 1.9; color: var(--text); }
+  li { margin-bottom: 6px; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #1a0a4e 0%, #0d0d2b 100%); border: 1px solid var(--border); border-radius: 14px; padding: 36px; margin-bottom: 52px; }
+  .hero h1 { font-size: 34px; }
+  .hero p { font-size: 16px; color: var(--text-muted); margin-top: 8px; }
+  .badge { display: inline-block; background: var(--purple); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-right: 6px; margin-top: 14px; }
+
+  /* CARDS */
+  .card { background: var(--purple-soft); border: 1px solid var(--border); border-radius: 10px; padding: 22px; margin-bottom: 16px; }
+  .card h3 { margin-top: 0; color: #fff; font-size: 15px; }
+  .card p, .card li { font-size: 14px; color: var(--text-muted); }
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+
+  /* SCRIPTS */
+  .script-box {
+    background: #0a0a22; border: 1px solid var(--purple); border-left: 4px solid var(--purple);
+    border-radius: 8px; padding: 22px; margin: 14px 0; font-size: 15px; line-height: 1.85;
+    color: #c4b5fd; white-space: pre-line;
+  }
+  .script-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--purple-light); font-weight: 700; margin-bottom: 8px; }
+
+  /* OBJECTION */
+  .objection { background: var(--navy); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 18px; overflow: hidden; }
+  .objection-header { background: rgba(239,68,68,0.1); border-bottom: 1px solid var(--border); padding: 14px 22px; font-size: 15px; font-weight: 700; color: #fca5a5; }
+  .objection-body { padding: 18px 22px; font-size: 15px; line-height: 1.8; color: #c4b5fd; }
+  .objection-meta { font-size: 13px; color: var(--text-muted); margin-top: 10px; font-style: italic; }
+
+  /* ROUTINE TABLE */
+  .routine-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .routine-table th { background: var(--purple-soft); color: var(--accent); padding: 12px 16px; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .routine-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+  .routine-table tr:hover td { background: rgba(107,63,197,0.05); }
+  .time-badge { display: inline-block; background: var(--purple); color: #fff; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 4px; white-space: nowrap; }
+
+  /* FLOW */
+  .flow { display: flex; flex-direction: column; gap: 4px; }
+  .flow-step { background: var(--purple-soft); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; font-size: 15px; position: relative; }
+  .flow-step .step-num { display: inline-block; background: var(--purple); color: #fff; width: 26px; height: 26px; border-radius: 50%; font-size: 12px; font-weight: 700; text-align: center; line-height: 26px; margin-right: 10px; }
+  .flow-arrow { text-align: center; color: var(--purple-light); font-size: 20px; line-height: 1; padding: 2px 0; }
+  .flow-branch { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 4px 0; }
+  .flow-branch-label { text-align: center; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .flow-yes { border-color: var(--green); }
+  .flow-no { border-color: var(--red); }
+
+  /* GLOSSARY */
+  .glossary-item { display: flex; gap: 18px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .glossary-term { min-width: 140px; font-weight: 700; color: var(--accent); font-size: 15px; }
+  .glossary-def { font-size: 15px; color: var(--text-muted); line-height: 1.65; }
+
+  /* TAGS */
+  .tag { display: inline-block; font-size: 12px; padding: 3px 9px; border-radius: 4px; margin-right: 4px; font-weight: 600; }
+  .tag-green { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+  .tag-yellow { background: rgba(245,158,11,0.15); color: #fcd34d; }
+  .tag-red { background: rgba(239,68,68,0.15); color: #fca5a5; }
+  .tag-purple { background: rgba(139,92,246,0.15); color: #c4b5fd; }
+
+  /* TIPS */
+  .tip { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); border-radius: 8px; padding: 16px 20px; font-size: 15px; color: #6ee7b7; margin: 14px 0; line-height: 1.7; }
+  .warn { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); border-radius: 8px; padding: 16px 20px; font-size: 15px; color: #fcd34d; margin: 14px 0; line-height: 1.7; }
+
+  /* COMMISSION TABLE */
+  .commission-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .commission-table th { background: var(--purple); color: #fff; padding: 13px 18px; text-align: center; font-size: 14px; }
+  .commission-table td { padding: 13px 18px; border-bottom: 1px solid var(--border); text-align: center; }
+  .commission-table tr:nth-child(even) td { background: rgba(107,63,197,0.05); }
+  .big-number { font-size: 26px; font-weight: 700; color: var(--accent); }
+
+  /* WEEKLY */
+  .week-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .week-day { background: var(--purple-soft); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .week-day h4 { font-size: 13px; color: var(--purple-light); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; font-weight: 700; }
+  .week-day ul { padding-left: 16px; font-size: 13px; color: var(--text-muted); line-height: 1.8; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ===== RESPONSIVE ===== */
+
+  /* TABLET (768px – 1024px) */
+  @media (max-width: 1024px) {
+    #sidebar { width: 230px; min-width: 230px; }
+    #main { margin-left: 230px; padding: 32px 28px; }
+    .card-grid.three { grid-template-columns: 1fr 1fr; }
+    .week-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* MOBILE (<768px) */
+  @media (max-width: 767px) {
+    #hamburger { display: flex; }
+    #sidebar { transform: translateX(-100%); width: 280px; }
+    #sidebar.open { transform: translateX(0); }
+    #overlay.open { display: block; }
+    #main { margin-left: 0; padding: 70px 18px 32px; }
+    .card-grid, .card-grid.three, .week-grid { grid-template-columns: 1fr; }
+    .flow-branch { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 26px; }
+    h2 { font-size: 19px; }
+    h3 { font-size: 16px; }
+    p, ul, ol, .script-box, .tip, .warn, .objection-body, .routine-table, .commission-table, .glossary-def { font-size: 14px; }
+    .routine-table th, .routine-table td { padding: 9px 10px; }
+    .glossary-item { flex-direction: column; gap: 4px; }
+    .glossary-term { min-width: unset; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HAMBURGER -->
+<button id="hamburger" aria-label="Menu" onclick="toggleSidebar()">
+  <span></span><span></span><span></span>
+</button>
+<div id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <h2>Faço a Conta</h2>
+    <p>Manual Comercial</p>
+  </div>
+  <div class="sidebar-section">Empresa</div>
+  <a class="sidebar-link" onclick="navTo('empresa')">O que é a Faço a Conta</a>
+  <a class="sidebar-link" onclick="navTo('historia')">Como começou</a>
+  <a class="sidebar-link" onclick="navTo('entregamos')">O que entregamos</a>
+  <a class="sidebar-link" onclick="navTo('planos')">Planos e preços</a>
+  <a class="sidebar-link" onclick="navTo('parceiros-programa')">Programa de Parceiros</a>
+
+  <div class="sidebar-section">Rotina</div>
+  <a class="sidebar-link" onclick="navTo('rotina-diaria')">Rotina diária</a>
+  <a class="sidebar-link" onclick="navTo('rotina-semanal')">Rotina semanal</a>
+  <a class="sidebar-link" onclick="navTo('grupo-whats')">Grupo WhatsApp Parceiros</a>
+  <a class="sidebar-link" onclick="navTo('pv-parceiros')">Mensagens Privadas</a>
+  <a class="sidebar-link" onclick="navTo('facebook')">Social Selling Facebook</a>
+
+  <div class="sidebar-section">Scripts</div>
+  <a class="sidebar-link" onclick="navTo('scripts-parceiros')">Scripts — Parceiros</a>
+  <a class="sidebar-link" onclick="navTo('scripts-prospeccao')">Scripts — Prospecção</a>
+  <a class="sidebar-link" onclick="navTo('objecoes')">Contorno de Objeções</a>
+
+  <div class="sidebar-section">Processo</div>
+  <a class="sidebar-link" onclick="navTo('fluxograma')">Fluxograma</a>
+  <a class="sidebar-link" onclick="navTo('crm')">Como usar o CRM</a>
+
+  <div class="sidebar-section">Referência</div>
+  <a class="sidebar-link" onclick="navTo('glossario')">Glossário</a>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Manual Comercial</h1>
+    <p>Tudo que você precisa saber para começar e crescer na Faço a Conta.</p>
+    <span class="badge">Versão 1.0</span>
+    <span class="badge">2026</span>
+    <span class="badge">Uso Interno</span>
+  </div>
+
+  <!-- EMPRESA -->
+  <section id="empresa">
+    <h2>O que é a Faço a Conta</h2>
+    <p>A <strong>Faço a Conta</strong> é uma solução completa de gestão fiscal digital para empreendedores. Não é só contabilidade — é um conjunto de tecnologia, atendimento e inteligência fiscal que resolve os problemas mais críticos do pequeno empresário.</p>
+
+    <div class="card-grid three">
+      <div class="card">
+        <h3>Organização Fiscal</h3>
+        <p>Fechamento correto de todos os impostos do mês, sem surpresas.</p>
+      </div>
+      <div class="card">
+        <h3>Controle Financeiro</h3>
+        <p>ERP para o empresário ver entradas, saídas e tomar decisões com dados.</p>
+      </div>
+      <div class="card">
+        <h3>Inteligência Artificial</h3>
+        <p>IA processa o fiscal automaticamente para garantir que nunca pague imposto indevido.</p>
+      </div>
+    </div>
+
+    <div class="tip">Nossa promessa: <strong>você nunca vai pagar um centavo a mais de imposto do que deve.</strong> Já eliminamos mais de R$2 milhões em cobranças indevidas para nossos clientes.</div>
+
+    <h3>Nossos números</h3>
+    <div class="card-grid">
+      <div class="card" style="text-align:center">
+        <div class="big-number">160+</div>
+        <p>Clientes ativos</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="big-number">94,6%</div>
+        <p>Taxa de satisfação</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="big-number">R$2MM+</div>
+        <p>Em impostos indevidos eliminados</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="big-number">🏆 Ouro</div>
+        <p>Prêmio de Qualidade da Amazônia (PQA)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTÓRIA -->
+  <section id="historia">
+    <h2>Como começou</h2>
+    <p>A Faço a Conta foi criada por <strong>Jonatha Oliveira</strong>, empreendedor há mais de 12 anos, fundador de 5 empresas em Manaus.</p>
+    <p>É uma <strong>spinoff da Econoserv Consultoria</strong>, empresa de consultoria fundada em 2014. Jonatha percebeu que o pequeno empresário precisava de uma solução acessível que resolvesse duas dores reais:</p>
+    <ul>
+      <li><strong>Clareza nos impostos</strong> — saber o que paga, por quê paga e se está pagando certo</li>
+      <li><strong>Controle financeiro</strong> — ter um sistema para estoque, vendas e caixa</li>
+    </ul>
+    <p>O MVP foi lançado em <strong>junho de 2022</strong>. Em menos de 3 anos, a Faço a Conta se tornou o <strong>primeiro startup em 30 anos a receber o troféu Ouro no PQA</strong> — o Prêmio de Qualidade da Amazônia.</p>
+
+    <div class="tip">Por que isso importa na venda: <strong>a empresa foi criada por um empreendedor que viveu as mesmas dores do cliente.</strong> Não é um contador que nunca teve empresa — é alguém que sabe na prática o que dói.</div>
+  </section>
+
+  <!-- O QUE ENTREGAMOS -->
+  <section id="entregamos">
+    <h2>O que entregamos</h2>
+    <p>O foco principal é o <strong>Plano Essencial (R$337/mês)</strong> para empresas de comércio. É o plano mais completo e o que tem mais valor para o cliente.</p>
+
+    <h3>Plano Essencial — R$337/mês (foco de venda)</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Fechamento fiscal completo</strong> — DAS, DCTF, SPED e todas as obrigações acessórias</li>
+        <li><strong>Departamento Pessoal (DP)</strong> — folha de pagamento + pró-labore calculados corretamente</li>
+        <li><strong>FAC Simples (ERP)</strong> — sistema de controle financeiro, estoque e emissão de notas fiscais</li>
+        <li><strong>Inteligência Artificial</strong> — processa o fiscal automaticamente para eliminar imposto indevido</li>
+        <li><strong>Contador no WhatsApp</strong> — resposta em até 4 horas úteis</li>
+        <li><strong>Relatório mensal</strong> — enviado antes do fechamento do mês</li>
+        <li><strong>Migração sem custo</strong> — a gente busca tudo do contador anterior</li>
+      </ul>
+    </div>
+
+    <div class="warn">Importante: a Faço a Conta entrega <strong>fechamento fiscal + DP</strong>. Não entregamos balanço e balancete (isso é contabilidade plena, para empresas maiores). Se o prospect precisar disso, é melhor ser honesto do que vender errado.</div>
+  </section>
+
+  <!-- PLANOS -->
+  <section id="planos">
+    <h2>Planos e preços</h2>
+    <table class="commission-table">
+      <tr>
+        <th>Plano</th>
+        <th>Público</th>
+        <th>Valor/mês</th>
+        <th>ERP incluso?</th>
+      </tr>
+      <tr>
+        <td><strong>Plano Essencial</strong> ⭐</td>
+        <td>Empresas de comércio</td>
+        <td><strong>R$337</strong></td>
+        <td><span class="tag tag-green">Sim — FAC Simples</span></td>
+      </tr>
+      <tr>
+        <td><strong>Plano Controle</strong></td>
+        <td>Empresas de serviços</td>
+        <td><strong>R$237</strong></td>
+        <td><span class="tag tag-yellow">Taxa adicional</span></td>
+      </tr>
+      <tr>
+        <td><strong>Plano MEI</strong></td>
+        <td>Microempreendedor Individual</td>
+        <td><strong>R$97</strong></td>
+        <td><span class="tag tag-red">Não incluso</span></td>
+      </tr>
+    </table>
+
+    <h3>Para quem é o Plano Essencial (perfil ideal)</h3>
+    <div class="card">
+      <ul>
+        <li>Empresa no regime <strong>Simples Nacional</strong></li>
+        <li>Segmento: <strong>comércio</strong> (loja, varejo, alimentação, distribuidora)</li>
+        <li>Até <strong>5 funcionários</strong></li>
+        <li>Faturamento até <strong>R$1,2 milhões/ano</strong></li>
+        <li>Dono que <strong>toma as decisões</strong> (não precisa consultar sócio externo)</li>
+        <li>Insatisfeito com contador atual OU ainda sem contador digital</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROGRAMA PARCEIROS -->
+  <section id="parceiros-programa">
+    <h2>Programa de Parceiros — Realizadores do Improvável</h2>
+    <p>Os parceiros são pessoas da nossa rede que indicam empresários para a Faço a Conta e ganham comissão por isso. <strong>O seu papel não é vender para o cliente final — é cuidar dos parceiros.</strong> Quem apresenta e fecha com o cliente é a Carol.</p>
+
+    <h3>Como funciona para o parceiro</h3>
+    <div class="flow">
+      <div class="flow-step"><span class="step-num">1</span>Parceiro indica um empresário para a Faço a Conta</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">2</span>Parceiro lança os dados na plataforma (alimenta o CRM automaticamente)</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">3</span>Carol entra em contato, apresenta e fecha</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">4</span>Parceiro recebe a comissão</div>
+    </div>
+
+    <h3>Tabela de comissões</h3>
+    <table class="commission-table">
+      <tr>
+        <th>Clientes indicados</th>
+        <th>Comissão por cliente</th>
+      </tr>
+      <tr><td>1 a 3 clientes</td><td><strong>R$150</strong>/cliente</td></tr>
+      <tr><td>4 a 6 clientes</td><td><strong>R$200</strong>/cliente</td></tr>
+      <tr><td>7 a 10 clientes</td><td><strong>R$250</strong>/cliente</td></tr>
+      <tr><td>11 ou mais clientes</td><td><strong>R$300</strong>/cliente</td></tr>
+    </table>
+
+    <div class="tip">A partir de 10 indicações: <strong>R$50/mês de recorrência por cliente ativo</strong> — a renda continua chegando todo mês enquanto o cliente ficar na plataforma.</div>
+
+    <h3>Clube Parceiros Elite</h3>
+    <div class="card">
+      <p>Ao atingir 10 clientes ativos, o parceiro entra automaticamente para o <strong>Clube Parceiros Elite</strong> com acesso a:</p>
+      <ul>
+        <li>Treinamentos exclusivos de vendas, marketing, gestão e IA</li>
+        <li>Estratégias avançadas de captação de clientes</li>
+        <li>Networking de alto nível</li>
+        <li>Imersão presencial — Realizadores do Improvável</li>
+      </ul>
+    </div>
+
+    <h3>Bônus Top 3 do Ciclo</h3>
+    <div class="card-grid three">
+      <div class="card" style="text-align:center; border-color: gold;">
+        <div class="big-number" style="color: gold;">R$10K</div>
+        <p>1º lugar do ciclo</p>
+      </div>
+      <div class="card" style="text-align:center; border-color: #94a3b8;">
+        <div class="big-number" style="color: #94a3b8;">R$5K</div>
+        <p>2º lugar do ciclo</p>
+      </div>
+      <div class="card" style="text-align:center; border-color: #cd7c2f;">
+        <div class="big-number" style="color: #cd7c2f;">R$3K</div>
+        <p>3º lugar do ciclo</p>
+      </div>
+    </div>
+
+    <h3>Desafio Top 3</h3>
+    <div class="tip">Indicar 3 empresas → receber comissões + participar do sorteio de um <strong>iPhone 17 Pro Max</strong>.</div>
+  </section>
+
+  <!-- ROTINA DIÁRIA -->
+  <section id="rotina-diaria">
+    <h2>Rotina diária — 11h30 às 17h00</h2>
+
+    <table class="routine-table">
+      <tr>
+        <th>Horário</th>
+        <th>Bloco</th>
+        <th>O que fazer</th>
+      </tr>
+      <tr>
+        <td><span class="time-badge">11h30</span></td>
+        <td>Abertura (15 min)</td>
+        <td>Abrir CRM e ver leads novos lançados pelos parceiros. Checar WhatsApp, Instagram, Facebook — alguém respondeu? Planejar as atividades do dia.</td>
+      </tr>
+      <tr>
+        <td><span class="time-badge">11h45</span></td>
+        <td>Grupo de parceiros (30 min)</td>
+        <td>Enviar mensagem diária no grupo do WhatsApp dos parceiros. Ver quem interagiu e responder.</td>
+      </tr>
+      <tr>
+        <td><span class="time-badge">12h15</span></td>
+        <td>Mensagens privadas para parceiros (45 min)</td>
+        <td>Enviar mensagens no PV para parceiros que não indicaram ninguém ainda. Atualizar parceiros sobre status dos leads que enviaram.</td>
+      </tr>
+      <tr>
+        <td><span class="time-badge">13h00</span></td>
+        <td>Facebook social selling (1h)</td>
+        <td>Entrar em grupos de empreendedores e comerciantes. Interagir, responder dúvidas, fazer abordagens privadas.</td>
+      </tr>
+      <tr>
+        <td><span class="time-badge">14h00</span></td>
+        <td>Respostas + CRM (30 min)</td>
+        <td>Responder todos os retornos. Qualificar quem demonstrou interesse. Fazer handoff para Carol.</td>
+      </tr>
+      <tr>
+        <td><span class="time-badge">14h30</span></td>
+        <td>LinkedIn e Instagram (45 min)</td>
+        <td>LinkedIn: conexões + mensagens. Instagram: aquecimento de perfis + DMs.</td>
+      </tr>
+      <tr>
+        <td><span class="time-badge">15h15</span></td>
+        <td>Follow-ups da cadência (45 min)</td>
+        <td>Fazer todos os follow-ups do dia (D3, D5, D7). Nenhum passa do dia sem ser feito.</td>
+      </tr>
+      <tr>
+        <td><span class="time-badge">16h00</span></td>
+        <td>CRM + Resumo (1h)</td>
+        <td>Atualizar status de todos os leads. Registrar atividades do dia. Enviar resumo diário para Carol e Jonatha.</td>
+      </tr>
+    </table>
+
+    <h3>Resumo diário — enviar às 16h45 (WhatsApp)</h3>
+    <div class="script-box">📊 Resumo [data]
+
+**Grupo de parceiros**
+Mensagem enviada: ✅ | Interações: [X]
+
+**Mensagens privadas parceiros**
+Parceiros ativados hoje: [X]
+Leads no CRM: [X]
+
+**Facebook / Social selling**
+Grupos interagidos: [X] | Abordagens privadas: [X]
+
+**Qualificados → Carol**
+[Nome] — [segmento] — disponível [horário]
+
+**O que não funcionou:**
+[observação]</div>
+  </section>
+
+  <!-- ROTINA SEMANAL -->
+  <section id="rotina-semanal">
+    <h2>Rotina semanal</h2>
+    <div class="week-grid">
+      <div class="week-day">
+        <h4>Segunda</h4>
+        <ul>
+          <li>Abertura da semana no grupo</li>
+          <li>PV para parceiros inativos</li>
+          <li>Novos grupos no Facebook</li>
+        </ul>
+      </div>
+      <div class="week-day">
+        <h4>Terça</h4>
+        <ul>
+          <li>Conteúdo no grupo (dica fiscal)</li>
+          <li>LinkedIn — conexões novas</li>
+          <li>Follow-ups D3</li>
+        </ul>
+      </div>
+      <div class="week-day">
+        <h4>Quarta</h4>
+        <ul>
+          <li>Atualizar parceiros sobre leads</li>
+          <li>Instagram — aquecimento</li>
+          <li>Facebook — abordagens PV</li>
+        </ul>
+      </div>
+      <div class="week-day">
+        <h4>Quinta</h4>
+        <ul>
+          <li>Engajamento no grupo</li>
+          <li>Follow-ups D5 (áudios)</li>
+          <li>Qualificações pendentes</li>
+        </ul>
+      </div>
+      <div class="week-day">
+        <h4>Sexta</h4>
+        <ul>
+          <li>Mensagem de fechamento no grupo</li>
+          <li>Follow-ups D7 finais</li>
+          <li>Limpar CRM + planejar semana</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRUPO WHATSAPP -->
+  <section id="grupo-whats">
+    <h2>Grupo WhatsApp — Parceiros</h2>
+    <p>O grupo é o coração da rede de parceiros. Precisa estar vivo todo dia — com conteúdo, motivação, resultado e movimento. <strong>Você é responsável por isso.</strong></p>
+
+    <div class="warn">Nunca deixe o grupo ficar mais de 24h sem uma mensagem sua. Grupo silencioso = parceiro desmotivado.</div>
+
+    <h3>Mensagem diária — segunda-feira (abertura da semana)</h3>
+    <div class="script-box">Bom dia, Realizadores! 🚀
+
+Mais uma semana de oportunidades.
+
+Lembra: cada empresário que você conhece que reclama do contador, não sabe quanto vai pagar de imposto ou não tem controle do financeiro... é uma indicação que pode virar comissão pra você.
+
+Esta semana temos vagas abertas para novos clientes.
+
+Quem tem alguém em mente? Me chama no privado! 💰</div>
+
+    <h3>Terça — conteúdo de valor (dica fiscal)</h3>
+    <div class="script-box">Você sabia? 📊
+
+95% das empresas no Simples Nacional pagam mais imposto do que deveriam.
+
+Não por falta de honestidade — mas porque ninguém parou para revisar.
+
+A Faço a Conta já identificou e eliminou mais de R$2 milhões em impostos indevidos para nossos clientes.
+
+Tem algum empresário na sua rede que nunca fez uma revisão fiscal? Pode ser uma boa conversa hoje. 😉</div>
+
+    <h3>Quarta — atualização de resultado</h3>
+    <div class="script-box">Atualização da semana para vocês! ✅
+
+[Número] leads chegaram até agora — obrigada a quem indicou!
+
+Parceiros que estão no ranking essa semana:
+🥇 [Nome] — [X] indicações
+🥈 [Nome] — [X] indicações
+
+Ainda dá tempo de entrar no top. Quem indica até sexta ainda conta pro ciclo! 🏆</div>
+
+    <h3>Quinta — motivação / história de cliente</h3>
+    <div class="script-box">Deixa eu te contar uma história rápida 👇
+
+Um cliente nosso de comércio aqui em Manaus estava pagando R$800 por mês de imposto. Depois que a gente fez o diagnóstico, descobrimos que ele devia pagar R$520.
+
+R$280 de diferença. Todo mês. Por anos.
+
+Isso acontece mais do que as pessoas imaginam.
+
+Se você conhece alguém assim, me chama. A indicação pode mudar o caixa do seu amigo — e gera comissão pra você. 💪</div>
+
+    <h3>Sexta — encerramento + urgência</h3>
+    <div class="script-box">Encerrando a semana! 🙌
+
+Obrigada a todos que indicaram essa semana. Vou atualizar o ranking na segunda.
+
+Se você ainda não indicou ninguém, sem pressão — mas lembra: 3 indicações já te colocam no sorteio do iPhone 17 Pro Max. 📱
+
+Qualquer dúvida, tô no privado. Bom final de semana! 🚀</div>
+
+    <h3>Mensagem de engajamento — quando o grupo ficar silencioso</h3>
+    <div class="script-box">Sumiu todo mundo? 😄
+
+Brincadeiras à parte — sei que todo mundo tá ocupado rodando o negócio.
+
+Mas deixa eu deixar uma pergunta simples:
+
+Você tem 1 amigo, vizinho ou fornecedor que:
+• Reclama que o contador nunca responde?
+• Não sabe quanto vai pagar de imposto no mês?
+• Controla o caixa no caderno ou no feeling?
+
+Se sim — essa pessoa precisa conhecer a Faço a Conta. E você pode ganhar até R$300 por ela.
+
+Me chama no privado! 👋</div>
+  </section>
+
+  <!-- MENSAGENS PRIVADAS PARCEIROS -->
+  <section id="pv-parceiros">
+    <h2>Mensagens Privadas — Parceiros que não indicaram ninguém</h2>
+    <p>Todo dia, você olha no CRM quem são os parceiros que estão cadastrados mas nunca indicaram ninguém. Essas pessoas precisam de um contato personalizado.</p>
+
+    <h3>Primeiro contato PV — parceiro novo ou inativo</h3>
+    <div class="script-box">Oi [Nome]! Aqui é a você, da Faço a Conta 👋
+
+Você faz parte do nosso programa de parceiros mas ainda não teve a oportunidade de indicar ninguém.
+
+Queria entender: você tem empresários na sua rede — amigos, familiares, clientes, fornecedores?
+
+Se sim, posso te ajudar a fazer isso de forma simples. São 2 minutos e você pode ganhar de R$150 a R$300 por cada empresa que fechar com a gente.
+
+O que acha?</div>
+
+    <h3>Follow-up PV — parceiro não respondeu (D+3)</h3>
+    <div class="script-box">Oi [Nome], passando de novo aqui 😊
+
+Sei que a vida de quem empreende é corrida — entendo bem.
+
+Mas deixa eu te fazer uma pergunta direta: você conhece algum dono de negócio que não tem muito controle do financeiro ou que nunca sabe quanto vai pagar de imposto?
+
+Se vier alguém na cabeça, me chama. Vendo eu a empresa, você recebe a comissão. É simples assim.</div>
+
+    <h3>Ativação por resultado — mostrar que funciona</h3>
+    <div class="script-box">Oi [Nome]! você aqui da Faço a Conta.
+
+Queria te contar uma coisa que aconteceu essa semana 👇
+
+O parceiro [Nome/apelido] indicou um cliente na segunda. Fechou na quarta. Já liberamos a comissão dele.
+
+Você também pode. Se tiver alguém na sua rede, o processo é rápido. Me passa o contato, eu cuido de tudo — você só espera a comissão. 💰</div>
+
+    <h3>Ativação do Desafio iPhone</h3>
+    <div class="script-box">Oi [Nome]!
+
+Lembrete rápido: nosso Desafio Top 3 ainda tá aberto.
+
+Indicar 3 empresas → comissão garantida + participar do sorteio do iPhone 17 Pro Max. 📱
+
+Você tem 3 conhecidos donos de empresa? Me chama que eu te ajudo a fazer isso agora mesmo.</div>
+  </section>
+
+  <!-- FACEBOOK -->
+  <section id="facebook">
+    <h2>Social Selling — Facebook</h2>
+    <p>O Facebook é o canal principal de prospecção direta para novos prospects. Aqui, você não chega vendendo — você <strong>aparece, contribui e depois aborda</strong>.</p>
+
+    <h3>Grupos para entrar (Manaus)</h3>
+    <div class="card">
+      <ul>
+        <li>Grupos de comerciantes e lojistas de bairros de Manaus</li>
+        <li>Grupos de empreendedores e MEI de Manaus</li>
+        <li>Grupos de associações comerciais (CDL Manaus, ACOMAN)</li>
+        <li>Grupos de compra e venda empresarial local</li>
+        <li>Grupos de networking de empreendedores do AM</li>
+      </ul>
+    </div>
+
+    <div class="warn">Regra de ouro: <strong>nunca mande publicidade direta no grupo.</strong> Isso resulta em banimento e prejudica a imagem da empresa. A abordagem é sempre pelo privado, após interação genuína.</div>
+
+    <h3>Como age nos grupos — passo a passo</h3>
+    <div class="flow">
+      <div class="flow-step"><span class="step-num">1</span><strong>Entrar no grupo</strong> — participar por 2-3 dias antes de qualquer abordagem</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">2</span><strong>Observar</strong> — quem posta sobre negócio, quem faz perguntas, quem reclama de imposto ou contador</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">3</span><strong>Responder dúvidas</strong> — quando alguém pergunta sobre fiscal, imposto, DAS, contador → você responde no grupo</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">4</span><strong>Chamar no privado</strong> — após a interação no grupo → abordagem personalizada no PV</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">5</span><strong>Qualificar e passar para Carol</strong></div>
+    </div>
+
+    <h3>Exemplo de resposta no grupo (quando alguém pergunta sobre contador/imposto)</h3>
+    <div class="script-label">Resposta no grupo público</div>
+    <div class="script-box">Oi [Nome]! Essa é uma dúvida muito comum.
+
+[Responde a dúvida de forma genuína e útil]
+
+Se quiser mais detalhes, me chama no privado — posso te ajudar melhor por lá. 😊</div>
+
+    <h3>Mensagem PV após interação no grupo</h3>
+    <div class="script-box">Oi [Nome]! Vi sua dúvida no grupo sobre [assunto].
+
+Trabalho na Faço a Conta — gestão fiscal digital para empreendedor. A gente resolve exatamente isso: fechamento fiscal correto, controle financeiro e ainda tem IA que garante que você nunca pague imposto indevido.
+
+Já eliminamos mais de R$2 milhões em cobranças erradas para clientes como você.
+
+Posso te contar como funciona em 2 minutos?</div>
+
+    <h3>Abordagem fria no PV (sem interação prévia)</h3>
+    <div class="script-box">Oi [Nome]! Vi que você tem uma empresa de [segmento] aqui em Manaus.
+
+Sou a você, da Faço a Conta — gestão fiscal digital para empreendedor. A gente entrega fechamento fiscal, ERP e IA pra garantir que você nunca pague imposto indevido.
+
+Pergunta rápida: você sabe quanto vai pagar de imposto antes de fechar o mês?
+
+Posso te mostrar como funcionamos em 15 minutos?</div>
+
+    <h3>Meta diária no Facebook</h3>
+    <div class="card-grid three">
+      <div class="card" style="text-align:center"><div class="big-number">3</div><p>Grupos ativos por dia</p></div>
+      <div class="card" style="text-align:center"><div class="big-number">3</div><p>Interações orgânicas</p></div>
+      <div class="card" style="text-align:center"><div class="big-number">3</div><p>Abordagens PV</p></div>
+    </div>
+  </section>
+
+  <!-- SCRIPTS PARCEIROS -->
+  <section id="scripts-parceiros">
+    <h2>Scripts — Parceiros</h2>
+
+    <h3>Como explicar o programa para um parceiro novo</h3>
+    <div class="script-box">É simples: você conecta empresários que precisam de uma solução fiscal com a Faço a Conta. Se fechar, você recebe comissão — de R$150 a R$300 por cliente, dependendo de quantos você indicar.
+
+Além disso: a partir de 10 indicações, você ganha R$50 por mês por cada cliente ativo. Isso é renda recorrente chegando todo mês enquanto o cliente ficar na plataforma.
+
+Você não precisa vender — só conectar. A gente cuida do resto.</div>
+
+    <h3>Como o parceiro indica (processo)</h3>
+    <div class="script-box">É muito fácil: você acessa a nossa plataforma, coloca o nome e o WhatsApp do empresário e pronto. O sistema lança automaticamente no nosso CRM e nossa equipe entra em contato.
+
+Você acompanha tudo em tempo real na plataforma — quando a indicação virou cliente, quando a comissão foi liberada.</div>
+
+    <h3>Atualização de status para parceiro</h3>
+    <div class="script-box">Oi [Nome]! Atualização sobre o lead que você indicou:
+
+[Nome do lead] está em [etapa: apresentação / proposta / negociação].
+
+A Carol está cuidando. Assim que fechar, sua comissão já fica registrada. Obrigada pela indicação! 🙌</div>
+  </section>
+
+  <!-- SCRIPTS PROSPECÇÃO -->
+  <section id="scripts-prospeccao">
+    <h2>Scripts — Prospecção Direta</h2>
+
+    <h3>Pitch de 30 segundos (saber de cor)</h3>
+    <div class="script-box">A Faço a Conta entrega gestão fiscal inteligente pra empreendedor. No plano principal você tem o fechamento fiscal, os impostos da folha, o FAC Simples que é nosso ERP para controlar financeiro e estoque, e uma inteligência artificial que processa seu fiscal automaticamente pra garantir que você nunca pague imposto indevido. Tudo por R$337 por mês. Já eliminamos mais de R$2 milhões em impostos indevidos para nossos clientes.</div>
+
+    <h3>Mensagem WhatsApp — primeiro contato</h3>
+    <div class="script-box">Oi [Nome]! Aqui é [seu nome] da Faço a Conta 👋
+
+A gente é gestão fiscal digital para empreendedor — fechamento fiscal, ERP e IA num plano só.
+
+Já eliminamos R$2MM em impostos indevidos para clientes aqui em Manaus.
+
+Posso te mostrar como funciona em 15 minutos? Sem compromisso.</div>
+
+    <h3>LinkedIn — nota de conexão</h3>
+    <div class="script-box">Oi [Nome]! Vi que você tem a [empresa] em Manaus. Trabalho na Faço a Conta — gestão fiscal inteligente para empreendedor. Quero conectar e compartilhar algo que pode fazer diferença no seu caixa.</div>
+
+    <h3>LinkedIn — mensagem após conexão aceita</h3>
+    <div class="script-box">Oi [Nome], obrigada por conectar!
+
+A Faço a Conta entrega fechamento fiscal, ERP e IA para garantir que você nunca pague imposto indevido. Já eliminamos R$2MM em cobranças erradas para empreendedores em Manaus.
+
+Posso te mandar um material rápido sobre isso?</div>
+
+    <h3>Instagram — DM após aquecimento</h3>
+    <div class="script-box">Oi [Nome]! Acompanhei alguns posts da [empresa] aqui no Instagram.
+
+Trabalho na Faço a Conta — gestão fiscal com ERP e IA para empreendedor. Já eliminamos R$2MM em impostos indevidos para quem empreende em Manaus.
+
+Posso te contar como funciona em 2 minutos?</div>
+  </section>
+
+  <!-- OBJEÇÕES -->
+  <section id="objecoes">
+    <h2>Contorno de Objeções</h2>
+    <p>Quando um prospect ou parceiro colocar uma objeção, use estas respostas. Não discuta — acolha e redirecione.</p>
+
+    <div class="objection">
+      <div class="objection-header">🔴 "Já tenho contador"</div>
+      <div class="objection-body">
+        "Ótimo! Fico feliz que você tem suporte. Me diz uma coisa — você sabe, antes de fechar o mês, quanto vai pagar de imposto? [pausa]
+
+Se a resposta for não — ou se você já passou por surpresa de guia chegando errada — vale a pena ver se o que você tem hoje realmente está funcionando bem.
+
+A gente faz um diagnóstico gratuito de 15 minutos. Se estiver tudo certo, você vai embora com mais certeza. Se não estiver, você vai saber o que corrigir. Quando teria esse tempo?"
+        <div class="objection-meta">Lógica: não ataque o contador atual. Plante a dúvida sobre se o serviço está sendo bem feito.</div>
+      </div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-header">🔴 "Tá caro"</div>
+      <div class="objection-body">
+        "Entendo. Me pergunta uma coisa — quanto você paga hoje de imposto por mês? [pausa]
+
+A maioria dos nossos clientes descobre que estava pagando mais do que deveria. A diferença costuma ser maior que o valor do plano.
+
+Em outras palavras: o serviço muitas vezes se paga sozinho só com o que você para de pagar a mais de imposto. Quer ver isso com um diagnóstico gratuito antes de decidir?"
+        <div class="objection-meta">Lógica: preço é objeção de valor, não de dinheiro. Mostre que o serviço se paga.</div>
+      </div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-header">🔴 "Tenho que falar com minha esposa / sócio"</div>
+      <div class="objection-body">
+        "Claro, faz todo sentido envolver quem decide junto. Me ajuda a entender: o que você precisaria mostrar para ela/ele para tomar essa decisão? [pausa]
+
+Posso te preparar um material bem resumido — o que a Faço a Conta faz, quanto custa e o que a empresa já ganhou de volta para outros clientes. Assim a conversa fica mais fácil.
+
+Você consegue ter essa conversa até quando?"
+        <div class="objection-meta">Lógica: não bloqueie o processo. Ajude o prospect a vender internamente para o sócio/cônjuge.</div>
+      </div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-header">🔴 "Não sei ainda se preciso"</div>
+      <div class="objection-body">
+        "Faz sentido a dúvida. Me diz — você consegue responder agora:
+• Você sabe exatamente quanto vai pagar de imposto esse mês, antes de fechar?
+• Tem controle de quanto entrou e saiu essa semana?
+• Seu contador te manda relatório mensal?
+
+Se a resposta pra qualquer uma for não — você precisa. E o nosso diagnóstico gratuito de 15 minutos vai te mostrar exatamente o que está faltando. Sem compromisso de fechar nada."
+        <div class="objection-meta">Lógica: use perguntas para fazer o prospect perceber a dor que ele não enxerga.</div>
+      </div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-header">🔴 "Vou pensar"</div>
+      <div class="objection-body">
+        "Claro, sem pressa. Só me diz — o que você precisaria ver ou saber para tomar essa decisão? [escuta]
+
+Porque se for uma dúvida específica, posso resolver agora mesmo. Se for só questão de tempo, me diz quando posso te ligar de volta — [opção A] ou [opção B]?"
+        <div class="objection-meta">Lógica: "vou pensar" quase sempre significa "não entendi o valor" ou "tenho uma objeção que não falei". Descubra qual é.</div>
+      </div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-header">🔴 "Não tenho tempo agora"</div>
+      <div class="objection-body">
+        "Sem problema! São só 15 minutos — e pode ser pelo WhatsApp mesmo, sem precisar de reunião.
+
+Quando você teria um intervalo essa semana? Manhã de [dia] ou tarde de [dia]?"
+        <div class="objection-meta">Lógica: reduza ao máximo o custo do próximo passo. 15 minutos pelo WhatsApp é muito menos que uma reunião.</div>
+      </div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-header">🔴 (Para parceiro) "Não conheço ninguém que precise"</div>
+      <div class="objection-body">
+        "Entendo! Mas deixa eu te perguntar — você tem algum amigo, fornecedor, vizinho ou conhecido que:
+• Reclama que não sabe quanto vai pagar de imposto?
+• Já levou multa ou guia chegou errada?
+• Usa planilha ou caderno pra controlar o financeiro?
+
+Se qualquer um aparecer na sua cabeça agora — essa é a pessoa. Me passa o contato e eu cuido de tudo daqui."
+        <div class="objection-meta">Lógica: o parceiro não reconhece a dor no conhecido porque não sabe o que procurar. Mostre os sinais.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLUXOGRAMA -->
+  <section id="fluxograma">
+    <h2>Processo — Fluxograma</h2>
+    <p>Como um lead entra e se transforma em cliente.</p>
+
+    <h3>Canal: Parceiros</h3>
+    <div class="flow">
+      <div class="flow-step"><span class="step-num">1</span><strong>você ativa parceiro</strong> — grupo ou PV</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">2</span><strong>Parceiro indica empresário</strong> — lança na plataforma</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">3</span><strong>CRM recebe o lead automaticamente</strong> — você visualiza</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">4</span><strong>você faz handoff para Carol</strong> — com nome, segmento, dor e disponibilidade</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">5</span><strong>Carol contata, apresenta e fecha</strong></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">6</span><strong>você atualiza parceiro</strong> — comissão liberada</div>
+    </div>
+
+    <h3 style="margin-top:32px">Canal: Prospecção direta (Facebook/LinkedIn/Instagram)</h3>
+    <div class="flow">
+      <div class="flow-step"><span class="step-num">1</span><strong>você identifica prospect</strong> — grupo, busca ou hashtag</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">2</span><strong>Aquecimento</strong> — seguir, curtir, comentar (D0–D2)</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">3</span><strong>Abordagem PV</strong> (D3) — mensagem com pitch</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-branch">
+        <div>
+          <div class="flow-branch-label" style="color:#6ee7b7">Respondeu com interesse</div>
+          <div class="flow-step flow-yes"><strong>Qualificar</strong> — 5 perguntas → Handoff Carol</div>
+        </div>
+        <div>
+          <div class="flow-branch-label" style="color:#fca5a5">Não respondeu / objeção</div>
+          <div class="flow-step flow-no"><strong>Continuar cadência</strong> — D5 áudio, D7 última tentativa</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><span class="step-num">4</span><strong>Carol apresenta e fecha</strong></div>
+    </div>
+
+    <h3 style="margin-top:32px">5 perguntas de qualificação (antes de passar para Carol)</h3>
+    <div class="card">
+      <ol>
+        <li>Você tem contador hoje? É digital ou presencial?</li>
+        <li>Quantos funcionários você tem?</li>
+        <li>Você sabe quanto vai pagar de imposto antes de fechar o mês?</li>
+        <li>Já teve algum problema com multa, guia atrasada ou erro na folha?</li>
+        <li>Se a gente resolvesse isso, você conseguiria tomar a decisão esse mês?</li>
+      </ol>
+    </div>
+    <div class="tip">Se o prospect responder SIM para pelo menos 3 perguntas → é qualificado. Faça o handoff para Carol.</div>
+  </section>
+
+  <!-- CRM -->
+  <section id="crm">
+    <h2>Como usar o CRM</h2>
+
+    <h3>O que você vai ver no CRM</h3>
+    <p>Quando um parceiro lança uma indicação na plataforma, o lead aparece automaticamente no CRM. Você não precisa criar manualmente — só <strong>abrir e ver o que chegou</strong>.</p>
+
+    <h3>O que registrar manualmente (prospecção direta)</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Nome e empresa</strong> do prospect</li>
+        <li><strong>Segmento</strong> — comércio / serviço / MEI</li>
+        <li><strong>Canal de origem</strong> — Facebook / LinkedIn / Instagram / WhatsApp</li>
+        <li><strong>Data do primeiro contato</strong></li>
+        <li><strong>Status atual</strong> — Abordado / Em cadência / Qualificado / Descartado</li>
+        <li><strong>Dor principal</strong> — o que ele mencionou</li>
+        <li><strong>Próximo passo e data</strong> — ex: "ligar quinta-feira"</li>
+      </ul>
+    </div>
+
+    <h3>Regras do CRM</h3>
+    <div class="tip">Todo lead precisa ter um <strong>próximo passo com data</strong>. Lead sem data é lead perdido.</div>
+    <div class="warn">Nunca deixe um lead mais de 48h sem atualização de status.</div>
+
+    <h3>Template de handoff para Carol (copiar e enviar no WhatsApp)</h3>
+    <div class="script-box">🔔 Lead qualificado — [canal de origem]
+
+Nome: [X]
+Empresa: [Y]
+Segmento: [comércio / serviço / MEI]
+Dor principal: [o que disse]
+Plano provável: Essencial R$337
+Disponível: [horário]
+Canal preferido: WhatsApp / Ligação / Meet</div>
+  </section>
+
+  <!-- GLOSSÁRIO -->
+  <section id="glossario">
+    <h2>Glossário — Termos que você precisa saber</h2>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Simples Nacional</div>
+      <div class="glossary-def">Regime tributário simplificado para micro e pequenas empresas com faturamento até R$4,8MM/ano. Paga todos os impostos num único boleto (DAS). É o regime dos nossos clientes ideais.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">DAS</div>
+      <div class="glossary-def">Documento de Arrecadação do Simples Nacional — é o "boleto" mensal que a empresa paga com todos os impostos do Simples. A Faço a Conta garante que ele seja calculado corretamente.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">DP</div>
+      <div class="glossary-def">Departamento Pessoal — área responsável pela folha de pagamento, admissão, demissão, férias, 13º e encargos dos funcionários. A Faço a Conta cuida disso no plano.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Folha de pagamento</div>
+      <div class="glossary-def">Documento que registra os salários de todos os funcionários e os encargos (INSS, FGTS, IR). A Faço a Conta calcula e processa a folha todo mês.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Pró-labore</div>
+      <div class="glossary-def">"Salário" do dono da empresa (sócio). Precisa ser declarado e tem incidência de INSS. A Faço a Conta cuida do cálculo.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Alíquota</div>
+      <div class="glossary-def">Percentual de imposto que incide sobre a receita ou produto. Ex: "alíquota de ICMS de 12%". Quando dizemos que a alíquota está errada, significa que a empresa está pagando um percentual maior do que deveria.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">INSS</div>
+      <div class="glossary-def">Instituto Nacional do Seguro Social — contribuição previdenciária. Descontado do salário do funcionário e também pago pela empresa. Garante aposentadoria, auxílio-doença, etc.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">FGTS</div>
+      <div class="glossary-def">Fundo de Garantia por Tempo de Serviço — 8% do salário depositado mensalmente pela empresa numa conta do funcionário. Sacado em demissão sem justa causa, compra de imóvel, etc.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">PIS / COFINS</div>
+      <div class="glossary-def">Tributos federais sobre o faturamento da empresa. Dentro da ZFM (Zona Franca de Manaus), em algumas operações, esses impostos têm alíquota zero — ou seja, não são cobrados. Empresas que não sabem disso pagam a mais.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">ICMS</div>
+      <div class="glossary-def">Imposto estadual sobre circulação de mercadorias e serviços. Cobrado pelo estado. Incide principalmente em empresas de comércio.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">ISS</div>
+      <div class="glossary-def">Imposto Sobre Serviços — imposto municipal cobrado sobre prestação de serviços. Empresas de serviços pagam ISS no lugar do ICMS.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Fechamento fiscal</div>
+      <div class="glossary-def">Processo mensal de apurar todos os impostos devidos, calcular o DAS, emitir as guias e enviar as declarações exigidas pelo governo. É a entrega principal da Faço a Conta.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Obrigações acessórias</div>
+      <div class="glossary-def">Declarações que a empresa precisa entregar ao governo além do pagamento de impostos (SPED, DCTF, eSocial, etc.). A Faço a Conta cuida de todas.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">MEI</div>
+      <div class="glossary-def">Microempreendedor Individual — faturamento até R$81.000/ano. Paga o DAS MEI (valor fixo mensal). A Faço a Conta tem o Plano MEI a R$97/mês.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">ME / EPP</div>
+      <div class="glossary-def">Microempresa (faturamento até R$360K/ano) e Empresa de Pequeno Porte (até R$4,8MM/ano). São os clientes principais do Plano Essencial e Controle.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">ERP</div>
+      <div class="glossary-def">Enterprise Resource Planning — sistema de gestão que integra financeiro, estoque, vendas e faturamento. O nosso é o FAC Simples, incluso no Plano Essencial.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">FAC Simples</div>
+      <div class="glossary-def">O ERP da Faço a Conta — sistema de controle financeiro, estoque e emissão de notas fiscais. Incluso no Plano Essencial (R$337/mês).</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">CRM</div>
+      <div class="glossary-def">Customer Relationship Management — sistema de gestão de relacionamento com clientes e leads. Onde você registra e acompanha todos os prospects. Parceiros alimentam automaticamente ao lançar indicações.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Lead</div>
+      <div class="glossary-def">Potencial cliente — pessoa que demonstrou algum interesse ou foi indicada. Nem todo lead vira cliente, por isso existe a qualificação.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Qualificação</div>
+      <div class="glossary-def">Processo de descobrir se o lead tem perfil para virar cliente (é Simples Nacional? Tem dor? É o decisor? Tem urgência?). Você qualifica — Carol fecha.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Handoff</div>
+      <div class="glossary-def">Passagem do lead do SDR (quem prospectou) para a Carol. O SDR qualifica, passa as informações e Carol assume para apresentar e fechar.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Cadência</div>
+      <div class="glossary-def">Sequência de contatos programados com um prospect. Ex: D1 WhatsApp → D3 ligação → D5 áudio → D7 última tentativa. Garante que nenhum lead seja abandonado cedo demais.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">ICP</div>
+      <div class="glossary-def">Ideal Customer Profile — perfil do cliente ideal. Para a Faço a Conta: empresa de comércio, Simples Nacional, até 5 funcionários, faturamento até R$1,2MM.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Social Selling</div>
+      <div class="glossary-def">Prospecção de clientes usando redes sociais (Facebook, LinkedIn, Instagram) de forma orgânica — sem anúncios pagos. Técnica de aparecer, interagir e abordar.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">PQA</div>
+      <div class="glossary-def">Prêmio de Qualidade da Amazônia — prêmio regional de excelência empresarial. A Faço a Conta foi o primeiro startup em 30 anos a receber o troféu Ouro. Use isso como prova de credibilidade.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Econoserv</div>
+      <div class="glossary-def">Empresa de consultoria fundada em 2014 por Jonatha Oliveira — empresa-mãe da Faço a Conta. Representa mais de 10 anos de experiência no mercado.</div>
+    </div>
+  </section>
+
+  <div style="text-align:center; padding: 40px 0; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border);">
+    Faço a Conta — Manual Interno | Atualizado em maio de 2026
+  </div>
+
+</main>
+
+<script>
+  // Navigation — renamed to avoid conflict with window.scrollTo
+  function navTo(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth' });
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    const link = document.querySelector(`.sidebar-link[onclick="navTo('${id}')"]`);
+    if (link) link.classList.add('active');
+    // Close sidebar on mobile after clicking
+    if (window.innerWidth < 768) closeSidebar();
+  }
+
+  // Hamburger menu
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('open');
+  }
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+  }
+
+  // Highlight active section on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const mainEl = document.getElementById('main');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    document.querySelectorAll('.sidebar-link').forEach(l => {
+      l.classList.remove('active');
+      const attr = l.getAttribute('onclick') || '';
+      if (current && attr.includes(`'${current}'`)) l.classList.add('active');
+    });
+  }, { passive: true });
+</script>
+</body>
+</html>
