@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano 90 Dias — Jonatha Oliveira</title>
+<style>
+  :root {
+    --bg: #0f0f1a;
+    --surface: #1a1a2e;
+    --surface2: #16213e;
+    --border: #2d2d4e;
+    --accent: #7c3aed;
+    --accent2: #a78bfa;
+    --gold: #f59e0b;
+    --gold2: #fcd34d;
+    --green: #10b981;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed; top: 0; left: 0; width: 260px; height: 100vh;
+    background: var(--surface); border-right: 1px solid var(--border);
+    overflow-y: auto; z-index: 100; padding: 24px 0;
+  }
+  .sidebar-brand {
+    padding: 0 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 16px;
+    font-size: 13px; font-weight: 800; color: var(--accent2); letter-spacing: 1px;
+  }
+  .sidebar-brand span { display: block; font-size: 11px; color: var(--text-muted); font-weight: 400; margin-top: 2px; }
+  .sidebar-section { padding: 8px 20px 4px; font-size: 10px; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .sidebar-link {
+    display: block; padding: 8px 20px; font-size: 13px; color: var(--text-muted);
+    cursor: pointer; border-left: 3px solid transparent; transition: all 0.2s;
+  }
+  .sidebar-link:hover { color: var(--text); background: rgba(124,58,237,0.1); border-left-color: var(--accent); }
+
+  /* MAIN */
+  .main { margin-left: 260px; padding: 40px 48px; max-width: 960px; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1a0a3e, #0f1a3e);
+    border: 1px solid var(--accent); border-radius: 16px;
+    padding: 40px; margin-bottom: 40px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px; background: radial-gradient(circle, rgba(124,58,237,0.3), transparent);
+    border-radius: 50%;
+  }
+  .hero-eyebrow { font-size: 11px; font-weight: 700; color: var(--accent2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .hero h1 { font-size: 32px; font-weight: 800; color: white; margin-bottom: 8px; }
+  .hero-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; }
+  .hero-dates { display: flex; gap: 24px; }
+  .hero-date { background: rgba(255,255,255,0.05); border-radius: 8px; padding: 12px 20px; text-align: center; }
+  .hero-date-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+  .hero-date-val { font-size: 16px; font-weight: 700; color: var(--accent2); }
+
+  /* VISION */
+  .vision-box {
+    background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(124,58,237,0.15));
+    border: 2px solid var(--gold); border-radius: 12px; padding: 28px; margin-bottom: 32px;
+  }
+  .vision-box h3 { font-size: 14px; font-weight: 700; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+  .vision-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+  .vision-check { color: var(--gold); font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+  .vision-text { font-size: 15px; color: var(--text); }
+
+  /* SECTION */
+  section { margin-bottom: 48px; }
+  h2 { font-size: 22px; font-weight: 800; color: white; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 16px; font-weight: 700; color: var(--accent2); margin: 24px 0 12px; }
+
+  /* PILLAR CARDS */
+  .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+  .pillar-card { border-radius: 12px; padding: 24px; border: 1px solid; }
+  .pillar-card.saude { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.4); }
+  .pillar-card.espirito { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.4); }
+  .pillar-card.profissional { background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.4); }
+  .pillar-icon { font-size: 28px; margin-bottom: 10px; }
+  .pillar-name { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .pillar-card.saude .pillar-name { color: var(--green); }
+  .pillar-card.espirito .pillar-name { color: var(--gold); }
+  .pillar-card.profissional .pillar-name { color: var(--accent2); }
+  .pillar-meta { font-size: 13px; color: var(--text-muted); }
+
+  /* ROUTINE */
+  .routine-block {
+    display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .routine-time { font-size: 13px; font-weight: 700; color: var(--accent2); min-width: 80px; font-family: monospace; }
+  .routine-tag {
+    font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0; margin-top: 2px;
+  }
+  .tag-saude { background: rgba(16,185,129,0.2); color: var(--green); }
+  .tag-espirito { background: rgba(245,158,11,0.2); color: var(--gold); }
+  .tag-trabalho { background: rgba(124,58,237,0.2); color: var(--accent2); }
+  .tag-pausa { background: rgba(148,163,184,0.2); color: var(--text-muted); }
+  .tag-regra { background: rgba(239,68,68,0.2); color: var(--red); }
+  .routine-desc { font-size: 14px; color: var(--text); }
+  .routine-desc small { display: block; font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  /* PHASES */
+  .phase-header {
+    border-radius: 10px; padding: 16px 20px; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .phase-header.p1 { background: rgba(59,130,246,0.12); border-left: 4px solid #3b82f6; }
+  .phase-header.p2 { background: rgba(124,58,237,0.12); border-left: 4px solid var(--accent); }
+  .phase-header.p3 { background: rgba(245,158,11,0.12); border-left: 4px solid var(--gold); }
+  .phase-num { font-size: 28px; font-weight: 900; }
+  .p1 .phase-num { color: #3b82f6; }
+  .p2 .phase-num { color: var(--accent2); }
+  .p3 .phase-num { color: var(--gold); }
+  .phase-info {}
+  .phase-name { font-size: 16px; font-weight: 700; color: white; }
+  .phase-dates { font-size: 12px; color: var(--text-muted); }
+
+  /* COMPANY CARDS */
+  .company-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .company-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .company-name { font-size: 12px; font-weight: 700; color: var(--accent2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .company-mission { font-size: 13px; font-weight: 700; color: white; margin-bottom: 10px; }
+  .company-actions { list-style: none; }
+  .company-actions li { font-size: 13px; color: var(--text-muted); padding: 4px 0; padding-left: 14px; position: relative; }
+  .company-actions li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 11px; }
+
+  /* ANXIETY BOX */
+  .anxiety-box {
+    background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.3);
+    border-radius: 10px; padding: 20px; margin: 16px 0;
+  }
+  .anxiety-box h4 { font-size: 13px; font-weight: 700; color: var(--red); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+  .anxiety-box p { font-size: 13px; color: var(--text-muted); }
+
+  /* CHECKIN */
+  .checkin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .checkin-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .checkin-box h4 { font-size: 13px; font-weight: 700; color: var(--accent2); margin-bottom: 12px; }
+  .checkin-item { font-size: 13px; color: var(--text-muted); padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .checkin-item:last-child { border-bottom: none; }
+
+  /* RULES */
+  .rules-list { list-style: none; }
+  .rules-list li {
+    display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .rule-num { font-size: 20px; font-weight: 900; color: var(--accent); min-width: 32px; }
+  .rule-text { font-size: 14px; color: var(--text); }
+  .rule-text strong { color: white; }
+
+  /* WARN / TIP */
+  .warn { background: rgba(239,68,68,0.1); border-left: 3px solid var(--red); border-radius: 6px; padding: 12px 16px; font-size: 13px; color: var(--text); margin: 12px 0; }
+  .tip { background: rgba(16,185,129,0.1); border-left: 3px solid var(--green); border-radius: 6px; padding: 12px 16px; font-size: 13px; color: var(--text); margin: 12px 0; }
+  .info { background: rgba(124,58,237,0.1); border-left: 3px solid var(--accent); border-radius: 6px; padding: 12px 16px; font-size: 13px; color: var(--text); margin: 12px 0; }
+
+  /* TRACKER */
+  .weight-track { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .week-box {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 14px; text-align: center; min-width: 70px;
+  }
+  .week-label { font-size: 10px; color: var(--text-muted); }
+  .week-kg { font-size: 14px; font-weight: 700; color: var(--text-muted); }
+  .week-box.start .week-kg { color: var(--red); }
+  .week-box.goal .week-kg { color: var(--green); }
+
+  /* MOBILE */
+  .hamburger { display: none; position: fixed; top: 16px; left: 16px; z-index: 200; background: var(--accent); border: none; border-radius: 8px; padding: 10px; cursor: pointer; }
+  .hamburger span { display: block; width: 20px; height: 2px; background: white; margin: 4px 0; }
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 90; }
+
+  @media (max-width: 1024px) {
+    .main { margin-left: 0; padding: 24px 24px; }
+    .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+    .sidebar.open { transform: translateX(0); }
+    .hamburger { display: block; }
+    .overlay.show { display: block; }
+    .pillar-grid { grid-template-columns: 1fr; }
+    .company-grid { grid-template-columns: 1fr; }
+    .checkin-grid { grid-template-columns: 1fr; }
+    .hero-dates { flex-direction: column; }
+  }
+  @media (max-width: 767px) {
+    .main { padding: 70px 16px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="hamburger" onclick="toggleSidebar()">
+  <span></span><span></span><span></span>
+</button>
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">PLANO 90 DIAS <span>Jonatha Oliveira · 2026</span></div>
+  <div class="sidebar-section">Visão Geral</div>
+  <a class="sidebar-link" onclick="navTo('visao')">Visão de Chegada</a>
+  <a class="sidebar-link" onclick="navTo('pilares')">Os 3 Pilares</a>
+  <a class="sidebar-link" onclick="navTo('rotina')">Rotina Diária Real</a>
+  <a class="sidebar-link" onclick="navTo('sono')">O Problema do Sono</a>
+  <a class="sidebar-link" onclick="navTo('estudo')">Bloco de Estudos</a>
+  <a class="sidebar-link" onclick="navTo('regras')">Regras do Plano</a>
+  <div class="sidebar-section">Mês a Mês</div>
+  <a class="sidebar-link" onclick="navTo('fase1')">Fase 1 — Fundação (Mai)</a>
+  <a class="sidebar-link" onclick="navTo('fase2')">Fase 2 — Momentum (Jun)</a>
+  <a class="sidebar-link" onclick="navTo('fase3')">Fase 3 — Aceleração (Jul)</a>
+  <div class="sidebar-section">Pilares Detalhados</div>
+  <a class="sidebar-link" onclick="navTo('saude')">Saúde</a>
+  <a class="sidebar-link" onclick="navTo('espiritualidade')">Espiritualidade</a>
+  <a class="sidebar-link" onclick="navTo('empresas')">Empresas</a>
+  <div class="sidebar-section">Relacionamentos</div>
+  <a class="sidebar-link" onclick="navTo('jamily')">Tempo com a Jamily</a>
+  <a class="sidebar-link" onclick="navTo('evely')">Reunião Semanal com a Evely</a>
+  <div class="sidebar-section">Acompanhamento</div>
+  <a class="sidebar-link" onclick="navTo('checkin')">Check-in Semanal</a>
+</nav>
+
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Plano Pessoal & Profissional</div>
+    <h1>90 Dias para Mudar o Jogo</h1>
+    <p class="hero-sub">Saúde · Espiritualidade · Faço a Conta · Econoserv · Facred</p>
+    <div class="hero-dates">
+      <div class="hero-date"><div class="hero-date-label">Início</div><div class="hero-date-val">10 Mai 2026</div></div>
+      <div class="hero-date"><div class="hero-date-label">Fim</div><div class="hero-date-val">07 Ago 2026</div></div>
+      <div class="hero-date"><div class="hero-date-label">Fase atual</div><div class="hero-date-val">Fase 1 — Fundação</div></div>
+    </div>
+  </div>
+
+  <!-- VISÃO -->
+  <section id="visao">
+    <h2>Visão de Chegada — Dia 90</h2>
+    <p style="color:var(--text-muted);margin-bottom:20px">Em 07 de agosto, se você olhar pra trás e falar "foi um trimestre foda", isso terá acontecido:</p>
+    <div class="vision-box">
+      <h3>Resultados esperados</h3>
+      <div class="vision-item"><span class="vision-check">⚖️</span><span class="vision-text"><strong>Peso: ~120-122kg</strong> — perda de 8 a 10kg. Voltou ao ritmo, corpo respondendo.</span></div>
+      <div class="vision-item"><span class="vision-check">📖</span><span class="vision-text"><strong>Devocional consolidado</strong> — hábito diário de manhã, antes do celular. Âncora espiritual funcionando.</span></div>
+      <div class="vision-item"><span class="vision-check">🏢</span><span class="vision-text"><strong>Faço a Conta:</strong> comercial rodando sem você no operacional. Kamila + time de estagiários gerando leads.</span></div>
+      <div class="vision-item"><span class="vision-check">📊</span><span class="vision-text"><strong>Econoserv:</strong> 3 a 5 contratos de consultoria ativos. Processo de diagnóstico documentado.</span></div>
+      <div class="vision-item"><span class="vision-check">💳</span><span class="vision-text"><strong>Facred:</strong> primeiros clientes de consultoria de crédito captados. Oferta definida e testada.</span></div>
+      <div class="vision-item"><span class="vision-check">🧠</span><span class="vision-text"><strong>Sensação:</strong> "Estou no controle — não correndo atrás." Ansiedade reduzida, rotina funcionando.</span></div>
+    </div>
+    <div class="info">A ansiedade financeira está te fazendo comer mais e trabalhar de forma caótica. O antídoto não é mais esforço — é criar momentum em pelo menos uma empresa que gera resultado. Isso interrompe o ciclo.</div>
+  </section>
+
+  <!-- PILARES -->
+  <section id="pilares">
+    <h2>Os 3 Pilares</h2>
+    <div class="pillar-grid">
+      <div class="pillar-card saude">
+        <div class="pillar-icon">💪</div>
+        <div class="pillar-name">Saúde</div>
+        <div class="pillar-meta">Academia + Cardio + Dieta<br>Meta: −10kg em 90 dias</div>
+      </div>
+      <div class="pillar-card espirito">
+        <div class="pillar-icon">✝️</div>
+        <div class="pillar-name">Espiritualidade</div>
+        <div class="pillar-meta">Devocional diário + Bíblia<br>Antes do celular, toda manhã</div>
+      </div>
+      <div class="pillar-card profissional">
+        <div class="pillar-icon">🏗️</div>
+        <div class="pillar-name">Profissional</div>
+        <div class="pillar-meta">3 empresas com ações claras<br>Sistemas > esforço individual</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEMA DO SONO -->
+  <section id="sono">
+    <h2>O Problema do Sono — Raiz de Tudo</h2>
+    <div style="background:linear-gradient(135deg,rgba(239,68,68,0.12),rgba(239,68,68,0.04));border:2px solid rgba(239,68,68,0.4);border-radius:12px;padding:24px;margin-bottom:24px">
+      <div style="font-size:13px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">O ciclo que está travando tudo</div>
+      <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap">
+        <div style="background:rgba(239,68,68,0.15);border-radius:8px;padding:10px 14px;font-size:13px;text-align:center">Dorme 00h-01h</div>
+        <div style="color:var(--red);font-size:18px;padding:0 8px">→</div>
+        <div style="background:rgba(239,68,68,0.15);border-radius:8px;padding:10px 14px;font-size:13px;text-align:center">Acorda 06h50 cansado</div>
+        <div style="color:var(--red);font-size:18px;padding:0 8px">→</div>
+        <div style="background:rgba(239,68,68,0.15);border-radius:8px;padding:10px 14px;font-size:13px;text-align:center">Volta dormir até 08h30</div>
+        <div style="color:var(--red);font-size:18px;padding:0 8px">→</div>
+        <div style="background:rgba(239,68,68,0.15);border-radius:8px;padding:10px 14px;font-size:13px;text-align:center">Manhã perdida</div>
+        <div style="color:var(--red);font-size:18px;padding:0 8px">→</div>
+        <div style="background:rgba(239,68,68,0.15);border-radius:8px;padding:10px 14px;font-size:13px;text-align:center">Dia caótico</div>
+        <div style="color:var(--red);font-size:18px;padding:0 8px">→</div>
+        <div style="background:rgba(239,68,68,0.15);border-radius:8px;padding:10px 14px;font-size:13px;text-align:center">Ansiedade à noite</div>
+        <div style="color:var(--red);font-size:18px;padding:0 8px">→</div>
+        <div style="background:rgba(239,68,68,0.15);border-radius:8px;padding:10px 14px;font-size:13px;text-align:center">Dorme tarde de novo</div>
+      </div>
+    </div>
+    <div class="tip"><strong>A única mudança que quebra esse ciclo:</strong> dormir às 22h30-23h00. Você não precisa acordar mais cedo — precisa dormir mais cedo. Com 8 horas de sono você vai levar a filha à escola, voltar com energia e o dia começa de verdade. Essa é a mudança mais difícil e mais importante do plano.</div>
+    <p style="color:var(--text-muted);font-size:14px;margin-top:12px">Para dormir mais cedo você precisa parar de trabalhar mais cedo. O bloco de estudos termina às 21h30. Das 21h30 às 22h30 é tempo para desacelerar — família, leitura leve, nada de tela de trabalho.</p>
+  </section>
+
+  <!-- ROTINA DIÁRIA -->
+  <section id="rotina">
+    <h2>Rotina Diária Real — Baseada na Sua Vida</h2>
+    <div class="warn">Esta rotina foi construída com os seus horários reais. Dois cenários de manhã dependendo se a Evely está ou não — o resto do dia é igual.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+      <div style="background:rgba(124,58,237,0.08);border:2px solid rgba(124,58,237,0.5);border-radius:10px;padding:16px">
+        <div style="font-size:12px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Manhã com a Evely</div>
+        <div style="font-size:13px;color:var(--text-muted);line-height:2">
+          <span style="color:var(--accent2);font-weight:700">06:50</span> — Leva a Jamily<br>
+          <span style="color:var(--accent2);font-weight:700">07:00</span> — Volta. Momento com a Evely (ela ainda está na cama até 07:30)<br>
+          <span style="color:var(--accent2);font-weight:700">07:30</span> — Evely sai → Devocional (30 min)<br>
+          <span style="color:var(--accent2);font-weight:700">08:00</span> — Café com os pais → Academia
+        </div>
+      </div>
+      <div style="background:rgba(245,158,11,0.06);border:2px solid rgba(245,158,11,0.4);border-radius:10px;padding:16px">
+        <div style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Manhã sem a Evely</div>
+        <div style="font-size:13px;color:var(--text-muted);line-height:2">
+          <span style="color:var(--gold);font-weight:700">06:50</span> — Leva a Jamily<br>
+          <span style="color:var(--gold);font-weight:700">07:00</span> — Volta → Devocional (30 min)<br>
+          <span style="color:var(--gold);font-weight:700">07:30</span> — Café com os pais (30 min)<br>
+          <span style="color:var(--gold);font-weight:700">08:00</span> — Academia
+        </div>
+      </div>
+    </div>
+
+    <div class="routine-block">
+      <div class="routine-time">06:50</div>
+      <span class="routine-tag tag-pausa">Família</span>
+      <div class="routine-desc"><strong>Leva a Jamily para a escola — volta 07:00</strong><small>Sem celular no carro. Conversa real nos 10 minutos com ela.</small></div>
+    </div>
+    <div class="routine-block">
+      <div class="routine-time">07:00</div>
+      <span class="routine-tag tag-espirito">Espírito</span>
+      <div class="routine-desc"><strong>Devocional + momento com a Evely (até 08:00)</strong><small>Com a Evely: 07:00-07:30 é o momento de vocês. 07:30-08:00 devocional quando ela sai. Sem a Evely: devocional 07:00-07:30, café com os pais 07:30-08:00.</small></div>
+    </div>
+    <div class="routine-block">
+      <div class="routine-time">08:00</div>
+      <span class="routine-tag tag-saude">Saúde</span>
+      <div class="routine-desc"><strong>Academia / Cardio (meta: retomar) — 60 min</strong><small>Não está indo agora — a meta é retomar. Quando retomar: Seg/Qua/Sex musculação, Ter/Qui cardio. Por enquanto: caminhada de 30 min serve para criar o hábito.</small></div>
+    </div>
+    <div class="routine-block">
+      <div class="routine-time">09:00</div>
+      <span class="routine-tag tag-saude">Saúde</span>
+      <div class="routine-desc"><strong>Café da manhã (dieta) + shower</strong><small>Seguir o plano alimentar.</small></div>
+    </div>
+    <div class="routine-block">
+      <div class="routine-time">09:30</div>
+      <span class="routine-tag tag-trabalho">Trabalho</span>
+      <div class="routine-desc"><strong>Planejamento do dia (20 min)</strong><small>3 prioridades por empresa. CRM Faço a Conta. O que precisa de decisão hoje?</small></div>
+    </div>
+    <div class="routine-block">
+      <div class="routine-time">09:50</div>
+      <span class="routine-tag" style="background:rgba(139,92,246,0.25);color:#c4b5fd">Agentes</span>
+      <div class="routine-desc"><strong>Sessão com Claude / Agentes — criação e produção (1h+)</strong><small>Scripts, estratégias, documentos, análises, conteúdo. O bloco que você produz com IA. Protegido — não entra reunião aqui.</small></div>
+    </div>
+    <div class="routine-block">
+      <div class="routine-time">11:00</div>
+      <span class="routine-tag tag-trabalho">Trabalho</span>
+      <div class="routine-desc"><strong>Operacional — todas as empresas (1h30)</strong><small>Faço a Conta: Kamila + CRM. Econoserv: prospects e follow-up. Facred: abordagens. Tudo junto — veja a matriz abaixo.</small></div>
+    </div>
+    <div class="routine-block">
+      <div class="routine-time">12:30</div>
+      <span class="routine-tag tag-saude">Saúde</span>
+      <div class="routine-desc"><strong>Almoço (dieta) + pausa (40 min)</strong><small>Comer devagar. Sem tela de trabalho.</small></div>
+    </div>
+    <div class="routine-block">
+      <div class="routine-time">13:10</div>
+      <span class="routine-tag tag-trabalho">Trabalho</span>
+      <div class="routine-desc"><strong>Reuniões + gestão + prospecção ativa (4h20)</strong><small>Calls, negociações, decisões. Todas as empresas conforme urgência do dia.</small></div>
+    </div>
+    <div class="routine-block">
+      <div class="routine-time">17:30</div>
+      <span class="routine-tag tag-trabalho">Trabalho</span>
+      <div class="routine-desc"><strong>Review do dia (20 min)</strong><small>O que avancei? O que fica? CRM atualizado?</small></div>
+    </div>
+    <div class="routine-block">
+      <div class="routine-time">18:00</div>
+      <span class="routine-tag tag-pausa">Família</span>
+      <div class="routine-desc"><strong>Jantar + tempo com a Jamily</strong><small>Sem trabalho. Ela precisa de você presente — não do celular na mão.</small></div>
+    </div>
+    <div class="routine-block">
+      <div class="routine-time">19:30</div>
+      <span class="routine-tag" style="background:rgba(59,130,246,0.2);color:#3b82f6">Estudo</span>
+      <div class="routine-desc"><strong>Bloco de estudos (2h)</strong><small>75 min faculdade de contabilidade → 45 min cursos G4 (ordem: Finanças com IA → Processos → Gestão).</small></div>
+    </div>
+    <div class="routine-block">
+      <div class="routine-time">21:30</div>
+      <span class="routine-tag tag-pausa">Noite</span>
+      <div class="routine-desc"><strong>Desacelerar — preparar o amanhã (30 min)</strong><small>3 prioridades do dia seguinte anotadas. Alarme 22:00 "FECHAR O COMPUTADOR". Nada de trabalho depois disso.</small></div>
+    </div>
+    <div class="routine-block">
+      <div class="routine-time">22:30</div>
+      <span class="routine-tag tag-regra">Meta</span>
+      <div class="routine-desc"><strong>DORMIR</strong><small>Alvo 22h30 · máximo 23h00. 8 horas = manhã que funciona.</small></div>
+    </div>
+
+    <h3>Matriz diária — todas as empresas todo dia</h3>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">Não é um dia por empresa. Todo dia você toca as três — mas com papéis diferentes:</p>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr>
+            <th style="padding:10px 14px;text-align:left;color:var(--text-muted);border-bottom:2px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:1px">Empresa</th>
+            <th style="padding:10px 14px;text-align:left;color:var(--text-muted);border-bottom:2px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:1px">Sessão Claude (manhã)</th>
+            <th style="padding:10px 14px;text-align:left;color:var(--text-muted);border-bottom:2px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:1px">Operacional (11h)</th>
+            <th style="padding:10px 14px;text-align:left;color:var(--text-muted);border-bottom:2px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:1px">Tarde (reuniões)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:12px 14px;font-weight:700;color:var(--accent2)">Faço a Conta</td>
+            <td style="padding:12px 14px;color:var(--text-muted)">Scripts, estratégia comercial, materiais para Kamila</td>
+            <td style="padding:12px 14px;color:var(--text-muted)">CRM + feedback Kamila (15 min)</td>
+            <td style="padding:12px 14px;color:var(--text-muted)">Reuniões de venda quando surgir</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:12px 14px;font-weight:700;color:var(--green)">Econoserv</td>
+            <td style="padding:12px 14px;color:var(--text-muted)">Roteiro de diagnóstico, proposta, análises</td>
+            <td style="padding:12px 14px;color:var(--text-muted)">Mensagens para agendar diagnósticos (15 min)</td>
+            <td style="padding:12px 14px;color:var(--text-muted)">Diagnósticos + fechamentos</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 14px;font-weight:700;color:var(--gold)">Facred</td>
+            <td style="padding:12px 14px;color:var(--text-muted)">Oferta, abordagem, materiais de venda</td>
+            <td style="padding:12px 14px;color:var(--text-muted)">Abordagens e follow-up (15 min)</td>
+            <td style="padding:12px 14px;color:var(--text-muted)">Reuniões de qualificação</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip" style="margin-top:16px">O bloco da sessão com Claude roda numa empresa por vez — mas você passa por todas na semana. Segunda e terça: Faço a Conta. Quarta e quinta: Econoserv. Sexta: Facred. Isso é foco, não abandono das outras.</div>
+
+    <div class="anxiety-box">
+      <h4>⚠️ Protocolo anti-ansiedade (comer fora da dieta)</h4>
+      <p>Quando bater vontade de comer fora do plano: <strong>beber 500ml de água + esperar 15 minutos</strong>. Se ainda quiser — para e escreve no celular: "o que está me deixando ansioso agora?" A fome emocional passa quando você nomeia o que está sentindo.</p>
+    </div>
+
+    <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:20px;margin-top:16px">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px">O GATILHO DE DESLIGAR — quando a Evely não está</div>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">Quando a Evely dorme com você, você desligo naturalmente. Quando está sozinho, entra em flow à noite e só para quando cai de sono. O problema não é falta de disciplina — é que você precisa de um gatilho externo. Crie um:</p>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="background:rgba(245,158,11,0.2);color:var(--gold);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;flex-shrink:0;margin-top:2px">REGRA 1</span>
+          <span style="font-size:13px;color:var(--text)"><strong>Alarme às 22:00 no celular com o nome "FECHAR O COMPUTADOR".</strong> Não é sugestão — é ordem. Mesmo que esteja em flow.</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="background:rgba(245,158,11,0.2);color:var(--gold);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;flex-shrink:0;margin-top:2px">REGRA 2</span>
+          <span style="font-size:13px;color:var(--text)">Antes de começar a trabalhar à noite, <strong>defina a última tarefa:</strong> "vou fechar quando terminar X." Nomeia a tarefa. Flow sem limite não tem fim.</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="background:rgba(245,158,11,0.2);color:var(--gold);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;flex-shrink:0;margin-top:2px">REGRA 3</span>
+          <span style="font-size:13px;color:var(--text)">Quando o alarme tocar: <strong>escreve onde parou</strong> (3 linhas no celular). Isso libera o cérebro — ele para de ficar "segurando" o pensamento porque sabe que está registrado.</span>
+        </div>
+      </div>
+    </div>
+    <div class="tip" style="margin-top:16px"><strong>E se precisar dormir depois de levar a filha?</strong> Acontece nas primeiras semanas. Nesse caso: devocional + café primeiro, depois 45 min de descanso, depois academia. Não pule o devocional para dormir mais — ele é o âncora do dia.</div>
+  </section>
+
+  <!-- ESTUDO -->
+  <section id="estudo">
+    <h2>Bloco de Estudos — Faculdade + Cursos</h2>
+    <div class="info">Último período de contabilidade é prioridade — é uma entrega com data. Os cursos comprados são investimento, mas não têm deadline. Organize assim:</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0">
+      <div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.4);border-radius:10px;padding:20px">
+        <div style="font-size:12px;font-weight:700;color:#3b82f6;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Prioridade 1 — Faculdade</div>
+        <div style="font-size:14px;color:var(--text);margin-bottom:8px"><strong>Último período de Contabilidade</strong></div>
+        <ul style="font-size:13px;color:var(--text-muted);padding-left:16px;line-height:2">
+          <li>Reserva os primeiros 75 min do bloco</li>
+          <li>Foca nas matérias com prova ou trabalho mais próximo</li>
+          <li>Mínimo 5 dias por semana</li>
+        </ul>
+      </div>
+      <div style="background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.4);border-radius:10px;padding:20px">
+        <div style="font-size:12px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Prioridade 2 — Cursos</div>
+        <div style="font-size:14px;color:var(--text);margin-bottom:8px"><strong>Cursos comprados</strong></div>
+        <ul style="font-size:13px;color:var(--text-muted);padding-left:16px;line-height:2">
+          <li>Últimos 45 min do bloco</li>
+          <li>Escolhe 1 curso por vez — não começa 3 ao mesmo tempo</li>
+          <li>Prioriza os que têm aplicação direta nas empresas</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Dias de estudo sugeridos</h3>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:16px">
+      <div style="background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:#3b82f6;font-weight:700">SEG</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Faculdade + Curso</div>
+      </div>
+      <div style="background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:#3b82f6;font-weight:700">TER</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Faculdade + Curso</div>
+      </div>
+      <div style="background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:#3b82f6;font-weight:700">QUA</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Faculdade + Curso</div>
+      </div>
+      <div style="background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:#3b82f6;font-weight:700">QUI</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Faculdade + Curso</div>
+      </div>
+      <div style="background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:#3b82f6;font-weight:700">SEX</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Faculdade + Curso</div>
+      </div>
+      <div style="background:rgba(59,130,246,0.06);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:var(--text-muted);font-weight:700">SÁB</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Só se precisar revisar</div>
+      </div>
+      <div style="background:rgba(148,163,184,0.05);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:var(--text-muted);font-weight:700">DOM</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Descanso total</div>
+      </div>
+    </div>
+
+    <h3>Ordem dos cursos G4 — por impacto nas empresas agora</h3>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+      <div style="display:flex;gap:14px;align-items:flex-start;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:14px">
+        <span style="font-size:20px;font-weight:900;color:#3b82f6;min-width:28px">1</span>
+        <div><div style="font-size:14px;font-weight:700;color:white">Finanças com IA</div><div style="font-size:13px;color:var(--text-muted)">Aplica direto na Faço a Conta (posicionamento) e Econoserv (consultoria de dados). É o mais urgente.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.3);border-radius:8px;padding:14px">
+        <span style="font-size:20px;font-weight:900;color:var(--accent2);min-width:28px">2</span>
+        <div><div style="font-size:14px;font-weight:700;color:white">Processos</div><div style="font-size:13px;color:var(--text-muted)">Você precisa delegar o comercial da Faço a Conta e documentar o diagnóstico da Econoserv. Sem processo não tem delegação.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;background:rgba(148,163,184,0.05);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <span style="font-size:20px;font-weight:900;color:var(--text-muted);min-width:28px">3</span>
+        <div><div style="font-size:14px;font-weight:700;color:white">Gestão</div><div style="font-size:13px;color:var(--text-muted)">Útil, mas você já gere. Pode ser terceiro — ou reserva para fim de semana.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;background:rgba(148,163,184,0.05);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <span style="font-size:20px;font-weight:900;color:var(--text-muted);min-width:28px">4</span>
+        <div><div style="font-size:14px;font-weight:700;color:white">Formatos de vídeos</div><div style="font-size:13px;color:var(--text-muted)">Conteúdo para social selling — importante para escala, mas não resolve o problema de receita de agora. Fase 2 ou 3.</div></div>
+      </div>
+    </div>
+
+    <div class="warn">Não estude depois das 21h30. Cérebro cansado não retém — você vai ler sem absorver e ainda vai dormir tarde. 2 horas com foco valem mais que 4 horas de arrasto.</div>
+  </section>
+
+  <!-- REGRAS -->
+  <section id="regras">
+    <h2>Regras do Plano</h2>
+    <ul class="rules-list">
+      <li><span class="rule-num">1</span><span class="rule-text"><strong>Devocional e academia são inegociáveis.</strong> São os primeiros blocos do dia. O dia que começar sem eles, vai ser mais difícil do que precisava ser.</span></li>
+      <li><span class="rule-num">2</span><span class="rule-text"><strong>Uma empresa por dia no deep work.</strong> Você tem 3 empresas prioritárias. Não pula de uma pra outra no mesmo bloco — isso esgota sem produzir.</span></li>
+      <li><span class="rule-num">3</span><span class="rule-text"><strong>Domingo é sagrado.</strong> Sem trabalho operacional. Só planejamento da semana + família. Recarregar é parte do sistema.</span></li>
+      <li><span class="rule-num">4</span><span class="rule-text"><strong>Check-in toda domingo à noite.</strong> 10 minutos respondendo as perguntas do check-in. Isso é o que mantém o plano vivo — sem ele, tudo vira intenção.</span></li>
+      <li><span class="rule-num">5</span><span class="rule-text"><strong>Pesar toda segunda-feira — só uma vez por semana.</strong> Pesar todo dia cria ansiedade. Pesar uma vez por semana cria dados. Só dados importam.</span></li>
+      <li><span class="rule-num">6</span><span class="rule-text"><strong>Não existe dia perfeito.</strong> Errou a dieta? Academia não foi? Você não "perdeu o plano" — você só teve um dia ruim. No dia seguinte, recomeça.</span></li>
+    </ul>
+  </section>
+
+  <!-- FASE 1 -->
+  <section id="fase1">
+    <h2>As 3 Fases</h2>
+    <div class="phase-header p1">
+      <div class="phase-num">1</div>
+      <div class="phase-info">
+        <div class="phase-name">Fundação — Colocar a casa em ordem</div>
+        <div class="phase-dates">10 de maio → 08 de junho de 2026 (30 dias)</div>
+      </div>
+    </div>
+    <p style="color:var(--text-muted);margin-bottom:16px">O objetivo desta fase não é resultado — é hábito. Você está instalando o sistema. Os resultados vêm depois.</p>
+
+    <h3>Saúde (Fase 1)</h3>
+    <ul style="color:var(--text-muted);font-size:14px;padding-left:18px;line-height:2">
+      <li>Academia 3x/semana (seg, qua, sex) — sem pressão de performance</li>
+      <li>Cardio 30 min: ter e qui</li>
+      <li>Seguir a dieta do amigo estritamente nos 30 dias</li>
+      <li>Pesar toda segunda — registrar aqui embaixo</li>
+      <li>Marcar consulta médica para avaliar retomar Mounjaro ou equivalente</li>
+    </ul>
+
+    <h3>Rastreador de Peso — Fase 1</h3>
+    <div class="weight-track">
+      <div class="week-box start"><div class="week-label">Início</div><div class="week-kg">~130kg</div></div>
+      <div class="week-box"><div class="week-label">Semana 1</div><div class="week-kg">___kg</div></div>
+      <div class="week-box"><div class="week-label">Semana 2</div><div class="week-kg">___kg</div></div>
+      <div class="week-box"><div class="week-label">Semana 3</div><div class="week-kg">___kg</div></div>
+      <div class="week-box"><div class="week-label">Semana 4</div><div class="week-kg">___kg</div></div>
+      <div class="week-box goal"><div class="week-label">Meta Fase 1</div><div class="week-kg">~127kg</div></div>
+    </div>
+
+    <h3>Espiritualidade (Fase 1)</h3>
+    <ul style="color:var(--text-muted);font-size:14px;padding-left:18px;line-height:2">
+      <li>Devocional todo dia às 6h — antes do celular</li>
+      <li>Plano de leitura: <strong>Provérbios</strong> — 31 capítulos, 1 por dia, cobre o mês exato</li>
+      <li>Domingo: escrever 3 linhas de reflexão da semana</li>
+    </ul>
+
+    <h3>Empresas (Fase 1)</h3>
+    <div class="company-grid">
+      <div class="company-card">
+        <div class="company-name">Faço a Conta</div>
+        <div class="company-mission">Missão: 10 clientes fechados</div>
+        <ul class="company-actions">
+          <li>Sua rede pessoal: 20 mensagens diretas esta semana</li>
+          <li>Parceiros: mensagem pessoal pedindo 1 indicação cada</li>
+          <li>Kamila: 5 abordagens/dia nos scripts</li>
+          <li>Follow-up em todos os leads do CRM</li>
+          <li>Você sai do operacional ao fim da fase 1</li>
+        </ul>
+      </div>
+      <div class="company-card">
+        <div class="company-name">Econoserv</div>
+        <div class="company-mission">Missão: 3 diagnósticos realizados</div>
+        <ul class="company-actions">
+          <li>Listar 15 empresas/contatos com fit</li>
+          <li>Mensagem pessoal: "tenho 45 min pra fazer um diagnóstico gratuito"</li>
+          <li>Executar os diagnósticos → fechar 1º contrato</li>
+          <li>Documentar o roteiro do diagnóstico</li>
+        </ul>
+      </div>
+      <div class="company-card">
+        <div class="company-name">Facred</div>
+        <div class="company-mission">Missão: definir a oferta</div>
+        <ul class="company-actions">
+          <li>Definir: quem é o cliente ideal?</li>
+          <li>Definir: qual é a oferta exata e o ticket?</li>
+          <li>Listar 20 prospects com esse perfil</li>
+          <li>Iniciar abordagem na semana 3</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FASE 2 -->
+  <section id="fase2">
+    <div class="phase-header p2">
+      <div class="phase-num">2</div>
+      <div class="phase-info">
+        <div class="phase-name">Momentum — Os sistemas começam a trabalhar por você</div>
+        <div class="phase-dates">09 de junho → 08 de julho de 2026 (30 dias)</div>
+      </div>
+    </div>
+    <p style="color:var(--text-muted);margin-bottom:16px">Aqui você para de instalar e começa a colher. A rotina já está rodando — agora é pressionar o acelerador.</p>
+
+    <h3>Saúde (Fase 2)</h3>
+    <ul style="color:var(--text-muted);font-size:14px;padding-left:18px;line-height:2">
+      <li>Academia 4x/semana — aumenta intensidade</li>
+      <li>Avaliar com médico: retomar medicação ou ajuste alimentar</li>
+      <li>Meta intermediária: <strong>−5kg</strong> (chegar em ~125kg)</li>
+      <li>Ansiedade deve estar menor — comercial das empresas gerando resultado</li>
+    </ul>
+
+    <h3>Empresas (Fase 2)</h3>
+    <div class="company-grid">
+      <div class="company-card">
+        <div class="company-name">Faço a Conta</div>
+        <div class="company-mission">Missão: escalar sem você</div>
+        <ul class="company-actions">
+          <li>Treinar 1-2 novos estagiários com o manual</li>
+          <li>Você revisa CRM 1x/semana — não mais que isso</li>
+          <li>Kamila rodando de forma autônoma</li>
+          <li>Meta: 20 clientes acumulados</li>
+        </ul>
+      </div>
+      <div class="company-card">
+        <div class="company-name">Econoserv</div>
+        <div class="company-mission">Missão: 2-3 contratos ativos</div>
+        <ul class="company-actions">
+          <li>Fechar contratos dos diagnósticos da Fase 1</li>
+          <li>Iniciar novos ciclos de diagnóstico</li>
+          <li>Documentar processo completo de venda</li>
+        </ul>
+      </div>
+      <div class="company-card">
+        <div class="company-name">Facred</div>
+        <div class="company-mission">Missão: primeiras vendas</div>
+        <ul class="company-actions">
+          <li>Executar abordagem nos 20 prospects mapeados</li>
+          <li>Fechar primeiros 2-3 clientes</li>
+          <li>Validar se a oferta está certa</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FASE 3 -->
+  <section id="fase3">
+    <div class="phase-header p3">
+      <div class="phase-num">3</div>
+      <div class="phase-info">
+        <div class="phase-name">Aceleração — Consolida e escala o que funciona</div>
+        <div class="phase-dates">09 de julho → 07 de agosto de 2026 (30 dias)</div>
+      </div>
+    </div>
+    <p style="color:var(--text-muted);margin-bottom:16px">Você chegou aqui com sistemas rodando e resultados aparecendo. Agora é hora de apertar o que funciona e descartar o que não funciona.</p>
+
+    <h3>Saúde (Fase 3)</h3>
+    <ul style="color:var(--text-muted);font-size:14px;padding-left:18px;line-height:2">
+      <li>Manter ritmo — não inventar, manter</li>
+      <li>Meta final: <strong>−8 a −10kg</strong> (chegar em ~120-122kg)</li>
+      <li>Corpo e mente mais estáveis — ansiedade sob controle</li>
+    </ul>
+
+    <h3>Empresas (Fase 3)</h3>
+    <div class="company-grid">
+      <div class="company-card">
+        <div class="company-name">Faço a Conta</div>
+        <div class="company-mission">Missão: comercial 100% autônomo</div>
+        <ul class="company-actions">
+          <li>Você só vê números — não faz operacional</li>
+          <li>Time de estagiários treinado e rodando</li>
+          <li>Meta: 30+ clientes acumulados</li>
+        </ul>
+      </div>
+      <div class="company-card">
+        <div class="company-name">Econoserv</div>
+        <div class="company-mission">Missão: 4-5 contratos ativos</div>
+        <ul class="company-actions">
+          <li>Processo documentado e replicável</li>
+          <li>Avaliar contratar alguém pra executar</li>
+          <li>Receita recorrente estabelecida</li>
+        </ul>
+      </div>
+      <div class="company-card">
+        <div class="company-name">Facred</div>
+        <div class="company-mission">Missão: modelo validado</div>
+        <ul class="company-actions">
+          <li>Oferta validada com dados reais</li>
+          <li>5+ clientes no pipeline ou fechados</li>
+          <li>Decidir: escala ou ajusta?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAÚDE DETALHADO -->
+  <section id="saude">
+    <h2>Pilar Saúde — Detalhado</h2>
+
+    <h3>Semana tipo (academia + cardio)</h3>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:20px">
+      <div style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.4);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:var(--green);font-weight:700">SEG</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Academia</div>
+      </div>
+      <div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:#3b82f6;font-weight:700">TER</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Cardio 30min</div>
+      </div>
+      <div style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.4);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:var(--green);font-weight:700">QUA</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Academia</div>
+      </div>
+      <div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:#3b82f6;font-weight:700">QUI</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Cardio 30min</div>
+      </div>
+      <div style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.4);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:var(--green);font-weight:700">SEX</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Academia</div>
+      </div>
+      <div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:#3b82f6;font-weight:700">SÁB</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Caminhada</div>
+      </div>
+      <div style="background:rgba(148,163,184,0.05);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:11px;color:var(--text-muted);font-weight:700">DOM</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Descanso</div>
+      </div>
+    </div>
+
+    <div class="tip">Ajuste a dieta do seu amigo comigo — me manda o que ele enviou e adapto para a sua rotina, restrições e horários.</div>
+
+    <h3>Rastreador de Peso — 90 Dias</h3>
+    <div class="weight-track">
+      <div class="week-box start"><div class="week-label">Hoje</div><div class="week-kg">~130kg</div></div>
+      <div class="week-box"><div class="week-label">Sem 2</div><div class="week-kg">___kg</div></div>
+      <div class="week-box"><div class="week-label">Sem 3</div><div class="week-kg">___kg</div></div>
+      <div class="week-box"><div class="week-label">Sem 4</div><div class="week-kg">___kg</div></div>
+      <div class="week-box"><div class="week-label">Sem 5</div><div class="week-kg">___kg</div></div>
+      <div class="week-box"><div class="week-label">Sem 6</div><div class="week-kg">___kg</div></div>
+      <div class="week-box"><div class="week-label">Sem 7</div><div class="week-kg">___kg</div></div>
+      <div class="week-box"><div class="week-label">Sem 8</div><div class="week-kg">___kg</div></div>
+      <div class="week-box"><div class="week-label">Sem 9</div><div class="week-kg">___kg</div></div>
+      <div class="week-box"><div class="week-label">Sem 10</div><div class="week-kg">___kg</div></div>
+      <div class="week-box"><div class="week-label">Sem 11</div><div class="week-kg">___kg</div></div>
+      <div class="week-box"><div class="week-label">Sem 12</div><div class="week-kg">___kg</div></div>
+      <div class="week-box goal"><div class="week-label">Dia 90</div><div class="week-kg">~120kg</div></div>
+    </div>
+  </section>
+
+  <!-- ESPIRITUALIDADE -->
+  <section id="espiritualidade">
+    <h2>Pilar Espiritualidade — Detalhado</h2>
+
+    <div class="tip"><strong>Por que isso é o primeiro bloco do dia:</strong> Quem começa o dia com propósito antes das demandas do mundo tem mais clareza, menos reatividade e mais paz para tomar decisões difíceis. Isso não é religião — é estratégia.</div>
+
+    <h3>Devocional diário — estrutura simples</h3>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="background:rgba(245,158,11,0.2);color:var(--gold);font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;flex-shrink:0">5 min</span>
+          <span style="font-size:14px;color:var(--text)">Silêncio. Desligar da correria. Agradecer por estar vivo.</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="background:rgba(245,158,11,0.2);color:var(--gold);font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;flex-shrink:0">15 min</span>
+          <span style="font-size:14px;color:var(--text)">Leitura do capítulo do dia (Provérbios no mês 1 — 1 capítulo/dia).</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="background:rgba(245,158,11,0.2);color:var(--gold);font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;flex-shrink:0">10 min</span>
+          <span style="font-size:14px;color:var(--text)">Oração. Fala com Deus o que está sentindo — sem enfeitar. O peso financeiro, a ansiedade, o sonho.</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>Plano de leitura — 90 dias</h3>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;font-size:13px">
+        <div style="border-right:1px solid var(--border);padding-right:16px">
+          <div style="font-weight:700;color:var(--gold);margin-bottom:8px">Mês 1 (Mai)</div>
+          <div style="color:var(--text-muted)">Provérbios<br>31 capítulos · sabedoria prática<br>1 capítulo por dia</div>
+        </div>
+        <div style="border-right:1px solid var(--border);padding-right:16px;padding-left:16px">
+          <div style="font-weight:700;color:var(--accent2);margin-bottom:8px">Mês 2 (Jun)</div>
+          <div style="color:var(--text-muted)">Filipenses + Colossenses<br>paz, propósito, identidade<br>2 capítulos por dia</div>
+        </div>
+        <div style="padding-left:16px">
+          <div style="font-weight:700;color:var(--green);margin-bottom:8px">Mês 3 (Jul)</div>
+          <div style="color:var(--text-muted)">Salmos (selecionados)<br>força, fé, restauração<br>2-3 salmos por dia</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMPRESAS -->
+  <section id="empresas">
+    <h2>Pilar Profissional — Empresas</h2>
+
+    <div class="info"><strong>Princípio:</strong> Você não pode estar no operacional de 3 empresas ao mesmo tempo. O plano é: Faço a Conta → sistema autônomo. Econoserv → você vende mas documenta. Facred → valida a oferta. Uma de cada vez no deep work diário.</div>
+
+    <h3>Faço a Conta — Meta: comercial autônomo em 90 dias</h3>
+    <div class="company-card" style="margin-bottom:16px">
+      <ul class="company-actions" style="line-height:2.2">
+        <li>Semana 1-2: sua rede pessoal + parceiros reativados + Kamila rodando scripts</li>
+        <li>Semana 3-4: 10 clientes fechados. Você começa a sair do operacional</li>
+        <li>Mês 2: treina 1-2 novos estagiários com o manual já publicado</li>
+        <li>Mês 3: você só vê o CRM 1x/semana — o time faz o resto</li>
+      </ul>
+    </div>
+
+    <h3>Econoserv — Meta: 3 contratos ativos em 60 dias</h3>
+    <div class="company-card" style="margin-bottom:16px">
+      <ul class="company-actions" style="line-height:2.2">
+        <li>Ação imediata: listar 15 empresas com fit para diagnóstico de estoque/financeiro/dados</li>
+        <li>Mensagem pessoal: "Tenho 45 minutos para fazer um diagnóstico gratuito na sua empresa. Quando você teria?"</li>
+        <li>Executar diagnósticos → apresentar proposta no mesmo dia ou no dia seguinte</li>
+        <li>Documentar o roteiro do diagnóstico para futura delegação</li>
+      </ul>
+    </div>
+
+    <h3>Facred — Meta: oferta validada e 3 clientes em 90 dias</h3>
+    <div class="company-card" style="margin-bottom:16px">
+      <ul class="company-actions" style="line-height:2.2">
+        <li>Semana 1: definir o cliente ideal (porte, segmento, necessidade de crédito)</li>
+        <li>Semana 1: definir oferta exata + ticket da consultoria</li>
+        <li>Semana 2-3: listar e abordar 20 prospects com esse perfil</li>
+        <li>Mês 2-3: fechar primeiros clientes e validar o modelo</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- JAMILY -->
+  <section id="jamily">
+    <h2>Tempo com a Jamily</h2>
+    <p style="color:var(--text-muted);margin-bottom:20px">Ela já tem você às 6h50 todo dia — mas isso é logística, não presença. Presença é quando você está com ela de forma intencional, sem celular, sem cabeça no trabalho.</p>
+
+    <div class="anxiety-box" style="background:rgba(245,158,11,0.06);border-color:rgba(245,158,11,0.3)">
+      <h4 style="color:var(--gold)">Por que isso precisa estar no plano</h4>
+      <p>Quando a vida fica corrida, os que perdem tempo primeiro são os que não reclamam. A Jamily não vai te cobrar. Mas ela vai sentir a diferença — e você também vai, quando olhar pra trás.</p>
+    </div>
+
+    <h3>Momentos diários (pequenos, mas reais)</h3>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px">
+      <div style="display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <span style="font-size:20px;flex-shrink:0">🚗</span>
+        <div><div style="font-size:14px;font-weight:700;color:white">06:50 — Caminho para a escola</div><div style="font-size:13px;color:var(--text-muted)">Sem celular no carro. Pergunta como ela está, o que vai acontecer hoje, o que ela está sentindo. 15 minutos de conversa real valem mais do que horas juntos sem presença.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <span style="font-size:20px;flex-shrink:0">🍽️</span>
+        <div><div style="font-size:14px;font-weight:700;color:white">18:00 — Jantar juntos (quando possível)</div><div style="font-size:13px;color:var(--text-muted)">O jantar é o momento de reconexão depois do dia. Sem trabalho na mesa. Pergunta como foi o dia dela — e escuta de verdade.</div></div>
+      </div>
+    </div>
+
+    <h3>Momento semanal exclusivo — Jamily Day</h3>
+    <div style="background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(124,58,237,0.08));border:2px solid rgba(245,158,11,0.4);border-radius:12px;padding:24px;margin-bottom:16px">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">Sábado à tarde — só vocês dois</div>
+      <p style="font-size:14px;color:var(--text);margin-bottom:12px">Uma vez por semana, sábado à tarde é dela. Não precisa ser caro ou elaborado — precisa ser intencional.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:var(--text-muted)">🎬 Cinema ou série juntos</div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:var(--text-muted)">🍦 Passeio e sorvete</div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:var(--text-muted)">🎮 Jogar o jogo favorito dela</div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:var(--text-muted)">🍕 Cozinhar algo juntos</div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:var(--text-muted)">📚 Ler junto ou ela te contar da escola</div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:var(--text-muted)">🏊 Piscina, parque, qualquer coisa que ela escolha</div>
+      </div>
+      <div style="margin-top:14px;font-size:13px;color:var(--gold)">Regra: ela escolhe o que fazer. Você aparece inteiro.</div>
+    </div>
+
+    <div class="tip">O celular no bolso durante o tempo com a Jamily não conta como presença. Ela percebe quando você está presente de verdade — e quando está só fisicamente.</div>
+  </section>
+
+  <!-- EVELY -->
+  <section id="evely">
+    <h2>Reunião Semanal com a Evely</h2>
+    <p style="color:var(--text-muted);margin-bottom:20px">Relacionamento sem alinhamento vira acúmulo de silêncio. A reunião semanal não é burocrática — é o espaço onde vocês dois existem juntos, não só ao redor das demandas da vida.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+      <div style="background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.4);border-radius:10px;padding:20px">
+        <div style="font-size:12px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Quando</div>
+        <div style="font-size:15px;font-weight:700;color:white;margin-bottom:6px">Domingo à tarde</div>
+        <div style="font-size:13px;color:var(--text-muted)">Antes do check-in profissional. Sugere: 15h-16h30. Sem pressa, sem celular.</div>
+      </div>
+      <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.4);border-radius:10px;padding:20px">
+        <div style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Duração</div>
+        <div style="font-size:15px;font-weight:700;color:white;margin-bottom:6px">60 a 90 minutos</div>
+        <div style="font-size:13px;color:var(--text-muted)">Dividido entre a parte de "planejamento" e a parte de "vocês dois".</div>
+      </div>
+    </div>
+
+    <h3>Agenda da reunião — 4 blocos</h3>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px">
+      <div style="display:flex;gap:0;align-items:stretch">
+        <div style="background:var(--accent);border-radius:8px 0 0 8px;padding:12px 16px;display:flex;align-items:center;justify-content:center;min-width:90px;text-align:center">
+          <div><div style="font-size:11px;font-weight:700;color:white;opacity:0.8">BLOCO 1</div><div style="font-size:13px;font-weight:700;color:white">10 min</div></div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:0 8px 8px 0;padding:14px 18px;flex:1">
+          <div style="font-size:14px;font-weight:700;color:white;margin-bottom:4px">Como cada um está</div>
+          <div style="font-size:13px;color:var(--text-muted)">Não sobre as empresas — sobre como vocês estão se sentindo. Pergunta, escuta, valida.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:0;align-items:stretch">
+        <div style="background:#3b82f6;border-radius:8px 0 0 8px;padding:12px 16px;display:flex;align-items:center;justify-content:center;min-width:90px;text-align:center">
+          <div><div style="font-size:11px;font-weight:700;color:white;opacity:0.8">BLOCO 2</div><div style="font-size:13px;font-weight:700;color:white">25 min</div></div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:0 8px 8px 0;padding:14px 18px;flex:1">
+          <div style="font-size:14px;font-weight:700;color:white;margin-bottom:4px">Projetos e finanças</div>
+          <div style="font-size:13px;color:var(--text-muted)">O que está acontecendo nas empresas (visão geral). Investimentos e metas financeiras do casal. Decisões que precisam de alinhamento dos dois.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:0;align-items:stretch">
+        <div style="background:var(--green);border-radius:8px 0 0 8px;padding:12px 16px;display:flex;align-items:center;justify-content:center;min-width:90px;text-align:center">
+          <div><div style="font-size:11px;font-weight:700;color:white;opacity:0.8">BLOCO 3</div><div style="font-size:13px;font-weight:700;color:white">15 min</div></div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:0 8px 8px 0;padding:14px 18px;flex:1">
+          <div style="font-size:14px;font-weight:700;color:white;margin-bottom:4px">Planos juntos</div>
+          <div style="font-size:13px;color:var(--text-muted)">Viagem, sonho, projeto de casal, próximo passo da relação. Não deixa esse bloco ser engolido pelos outros dois.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:0;align-items:stretch">
+        <div style="background:var(--gold);border-radius:8px 0 0 8px;padding:12px 16px;display:flex;align-items:center;justify-content:center;min-width:90px;text-align:center">
+          <div><div style="font-size:11px;font-weight:700;color:#1a1a3e;opacity:0.9">BLOCO 4</div><div style="font-size:13px;font-weight:700;color:#1a1a3e">30+ min</div></div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:0 8px 8px 0;padding:14px 18px;flex:1">
+          <div style="font-size:14px;font-weight:700;color:white;margin-bottom:4px">Momento de vocês dois</div>
+          <div style="font-size:13px;color:var(--text-muted)">Sem pauta. Pode ser um filme, um passeio, cozinhar juntos, conversa sem pressa. Esse bloco não é opcional — é o motivo dos outros três existirem.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px">
+      <div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:12px">Perguntas que abrem a reunião (alternam a cada semana)</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
+        <li style="font-size:13px;color:var(--text-muted);padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--accent)">→</span> "O que você precisou de mim essa semana e eu não percebi?"</li>
+        <li style="font-size:13px;color:var(--text-muted);padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--accent)">→</span> "Tem algo que você está carregando sozinha que a gente poderia resolver junto?"</li>
+        <li style="font-size:13px;color:var(--text-muted);padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--accent)">→</span> "O que você gostaria que fosse diferente na nossa rotina?"</li>
+        <li style="font-size:13px;color:var(--text-muted);padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--accent)">→</span> "Qual foi o melhor momento nosso essa semana?"</li>
+      </ul>
+    </div>
+
+    <div class="tip"><strong>Conexão entre sono e relacionamento:</strong> Quando a Evely dorme com você, você dorme mais cedo e melhor. Isso não é coincidência — é o efeito de se sentir seguro. A reunião semanal cria esse mesmo senso de segurança de forma intencional, independente de quem está dormindo onde.</div>
+  </section>
+
+  <!-- CHECK-IN -->
+  <section id="checkin">
+    <h2>Check-in Semanal — Todo Domingo</h2>
+    <p style="color:var(--text-muted);margin-bottom:20px">10 minutos toda semana. Esse ritual é o que separa quem tem plano de quem tem intenção.</p>
+
+    <div class="checkin-grid">
+      <div class="checkin-box">
+        <h4>Saúde</h4>
+        <div class="checkin-item">Fui à academia quantas vezes? ___/semana</div>
+        <div class="checkin-item">Segui a dieta? ___% dos dias</div>
+        <div class="checkin-item">Peso desta segunda: ___kg</div>
+        <div class="checkin-item">Tive episódios de ansiedade-comida? Como lidei?</div>
+      </div>
+      <div class="checkin-box">
+        <h4>Espiritualidade</h4>
+        <div class="checkin-item">Devocional: ___ de 7 dias</div>
+        <div class="checkin-item">O que leu esta semana?</div>
+        <div class="checkin-item">O que ficou com você da leitura?</div>
+      </div>
+      <div class="checkin-box">
+        <h4>Empresas</h4>
+        <div class="checkin-item">Faço a Conta: ___ leads. ___ reuniões. ___ fechamentos.</div>
+        <div class="checkin-item">Econoserv: ___ diagnósticos. ___ propostas. ___ contratos.</div>
+        <div class="checkin-item">Facred: ___ abordagens. ___ respostas. ___ fechamentos.</div>
+      </div>
+      <div class="checkin-box">
+        <h4>Família & Relacionamento</h4>
+        <div class="checkin-item">Tive o momento semanal com a Jamily? (sim/não)</div>
+        <div class="checkin-item">Estive presente no caminho para a escola?</div>
+        <div class="checkin-item">Fiz a reunião semanal com a Evely? (sim/não)</div>
+        <div class="checkin-item">O que ela precisou de mim e eu percebi (ou não)?</div>
+      </div>
+      <div class="checkin-box">
+        <h4>Geral</h4>
+        <div class="checkin-item">O que mais avancei essa semana?</div>
+        <div class="checkin-item">O que não fiz e precisava ter feito?</div>
+        <div class="checkin-item">Qual a prioridade #1 da próxima semana?</div>
+        <div class="checkin-item">Nota da semana (1-10): ___</div>
+      </div>
+    </div>
+
+    <div class="tip" style="margin-top:24px"><strong>Lembrete:</strong> Este plano não é uma prisão — é uma bússola. Se algo não está funcionando, ajusta. O que não pode é abandonar sem revisar. Quando travar, volta para a Visão de Chegada e pergunta: esse obstáculo me impede de chegar lá ou é só desconforto?</div>
+  </section>
+
+</main>
+
+<script>
+function navTo(id) {
+  const el = document.getElementById(id);
+  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  closeSidebar();
+}
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+</script>
+</body>
+</html>
